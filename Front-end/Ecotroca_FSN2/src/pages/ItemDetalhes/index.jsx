@@ -21,7 +21,7 @@ const produtos = [
   },
   {
     id: 2,
-    nome: "Livro 'O Senhor dos Anéis'",
+    nome: "Livro O Senhor dos Anéis",
     categoria: "Livros",
     cidade: "Rio de Janeiro",
     descricao: "Coleção completa do Senhor dos Anéis em ótimo estado.",
@@ -73,7 +73,8 @@ const DetalhesItem = () => {
 
   return (
     <div className={styles.page}>
-      <EcoTrocaMenu />
+      {/* MENU DO TOPO */}
+      <EcoTrocaMenu variant="detalhesProduto" />
 
       <main className={styles.main}>
         <img src={produto.imagem} alt={produto.nome} className={styles.productImage} />
@@ -87,7 +88,7 @@ const DetalhesItem = () => {
         <div className={styles.actions}>
           <button
             className={styles.btnProposta}
-            onClick={() => alert('em desenvolvimento')}
+            onClick={() => navigate(`/propostas/${produto.id}`)}
           >
             Faça uma proposta
           </button>

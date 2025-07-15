@@ -13,7 +13,7 @@ import styles from './Home.module.css';
 
 const produtosOriginais = [
   { id: 1, nome: "Bicicleta de montanha", categoria: "Esportes", cidade: "São Paulo", imagem: bicicletaImg },
-  { id: 2, nome: "Livro 'O Senhor dos Anéis'", categoria: "Livros", cidade: "Rio de Janeiro", imagem: livroImg },
+  { id: 2, nome: "Livro O Senhor dos Anéis", categoria: "Livros", cidade: "Rio de Janeiro", imagem: livroImg },
   { id: 3, nome: "Câmera DSLR", categoria: "Eletrônicos", cidade: "Belo Horizonte", imagem: cameraImg },
   { id: 4, nome: "Mesa de jantar", categoria: "Móveis", cidade: "Curitiba", imagem: mesaImg },
   { id: 5, nome: "Sofá de dois lugares", categoria: "Móveis", cidade: "Porto Alegre", imagem: sofaImg },
@@ -73,7 +73,8 @@ const Home = () => {
 
   return (
     <div className={styles.page}>
-      <EcoTrocaMenu />
+      {/* Menu */}
+      <EcoTrocaMenu variant="home" />
 
       <div className={styles.filtersContainer}>
         <div className={styles.filtersRow}>
@@ -86,13 +87,12 @@ const Home = () => {
           </select>
           
           <select
-          className={`${styles['filter-select']} ${styles['filter-cidade']}`}
-          value={filtroCidade}
-          onChange={e => setFiltroCidade(e.target.value)}
+            className={`${styles['filter-select']} ${styles['filter-cidade']}`}
+            value={filtroCidade}
+            onChange={e => setFiltroCidade(e.target.value)}
           >
             {cidades.map(c => <option key={c}>{c}</option>)}
-            </select>
-
+          </select>
         </div>
 
         <input

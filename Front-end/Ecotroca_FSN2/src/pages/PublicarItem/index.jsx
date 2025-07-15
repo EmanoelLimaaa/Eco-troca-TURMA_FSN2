@@ -1,17 +1,13 @@
 import style from './PublicarItem.module.css';
 import { useNavigate } from 'react-router-dom';
+import EcoTrocaMenu from '../../components/EcoTrocaMenu';
 
 function PublicarItem() {
 const navigate = useNavigate();
 
 return (
     <div className={style.page}>
-      <header className={style.header}>
-        <div className={style.logo} onClick={() => navigate('/')}>EcoTroca</div>
-        <nav className={style.nav}>
-          <span className={style.navItem} onClick={() => navigate('/')}>Página Inicial</span>
-        </nav>
-      </header>
+      <EcoTrocaMenu variant="publicarItem" />
 
       <div className={style.container}>
         <h1>Publicar um Item</h1>
