@@ -16,7 +16,7 @@ const produtos = [
   },
   {
     id: 2,
-    nome: "Livro 'O Senhor dos Anéis'",
+    nome: "Livro de O Senhor dos Anéis",
     categoria: "Livros",
     cidade: "Rio de Janeiro",
     descricao: "Coleção completa do Senhor dos Anéis em ótimo estado.",

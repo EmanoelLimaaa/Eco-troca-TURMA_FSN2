@@ -5,6 +5,7 @@ import DetalhesItem from './pages/ItemDetalhes';
 import Login from './pages/Login';
 import MeuPerfil from './pages/MeuPerfil';
 import CadUsuario from './pages/CadUsuario';
+import TelaProposta from './pages/TelaPropostas';
 
 function App() {
   return (
@@ -16,9 +17,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/meuperfil" element={<MeuPerfil />} />
         <Route path="/CadUsuario" element={<CadUsuario />} />
+        <Route path="/propostas/:id" element={<TelaProposta />} />
       </Routes>
     </BrowserRouter>
   );
 }
-
 export default App;
