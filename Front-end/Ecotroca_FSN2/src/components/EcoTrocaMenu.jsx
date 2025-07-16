@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './EcoTrocaMenu.css';
 
-// Ícones simplificados para exemplo
 const NotificationIcon = () => (
   <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
@@ -48,7 +47,6 @@ const EcoTrocaMenu = ({ variant }) => {
       break;
 
     case 'login':
-      // Apenas a logo
       break;
 
     case 'publicarItem':
@@ -102,6 +100,27 @@ const EcoTrocaMenu = ({ variant }) => {
         </>
       );
       break;
+
+      case 'configuracoes':
+  centerContent = (
+    <>
+      <Link to="/" onClick={() => setIsMenuOpen(false)}>Início</Link>
+      <Link to="/categorias" onClick={() => setIsMenuOpen(false)}>Categorias</Link>
+      <Link to="/favoritos" onClick={() => setIsMenuOpen(false)}>Favoritos</Link>
+      <Link to="/mensagens" onClick={() => setIsMenuOpen(false)}>Mensagens</Link>
+    </>
+  );
+  rightContent = (
+    <>
+      <button className="icon-button" onClick={() => { alert('Notificações'); setIsMenuOpen(false); }}>
+        <NotificationIcon />
+      </button>
+      <Link to="/meu-perfil" className="icon-button" onClick={() => setIsMenuOpen(false)}>
+        <ProfileIcon />
+      </Link>
+    </>
+  );
+  break;
 
     default:
       break;
