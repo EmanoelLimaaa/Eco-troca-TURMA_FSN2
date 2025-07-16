@@ -2,133 +2,129 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './EcoTrocaMenu.css';
 
-export default function EcoTrocaMenu() {
-  const location = useLocation();
-  const currentPath = location.pathname;
+const NotificationIcon = () => (
+  <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+  </svg>
+);
 
-  const commonElements = {
-    logo: <Link to="/" className="logo">EcoTroca</Link>,
-    profileIcon: (
-      <Link to="/meu-perfil" className="profile-icon" aria-label="Perfil">
-        <FaRegUserCircle size={24} />
-      </Link>
-    ),
-    notificationIcon: (
-      <button className="icon-button" aria-label="Notificações">
-        <FiBell size={20} />
+const ProfileIcon = () => <div className="profile-circle"></div>;
+
+const SearchBar = () => <input type="search" placeholder="Pesquisar..." className="search-bar" />;
+
+const HamburgerIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+);
+
+const EcoTrocaMenu = ({ variant }) => {
+  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  let centerContent = null;
+  let rightContent = null;
+
+  switch (variant) {
+    case 'home':
+      rightContent = (
+        <>
+          <button className="button button-green" onClick={() => { navigate('/publicar'); setIsMenuOpen(false); }}>
+            Cadastrar Item
+          </button>
+          <button className="button button-gray" onClick={() => { navigate('/login'); setIsMenuOpen(false); }}>
+            Login
+          </button>
+        </>
+      );
+      break;
+
+    case 'login':
+      break;
+
+    case 'publicarItem':
+      centerContent = (
+        <>
+          <Link to="/" onClick={() => setIsMenuOpen(false)}>Início</Link>
+          <Link to="/categorias" onClick={() => setIsMenuOpen(false)}>Categorias</Link>
+          <Link to="/meus-itens" onClick={() => setIsMenuOpen(false)}>Meus Itens</Link>
+          <Link to="/mensagens" onClick={() => setIsMenuOpen(false)}>Mensagens</Link>
+        </>
+      );
+      rightContent = (
+        <>
+          <button className="icon-button" onClick={() => { alert('Notificações'); setIsMenuOpen(false); }}>
+            <NotificationIcon />
+          </button>
+          <Link to="/meu-perfil" className="icon-button" onClick={() => setIsMenuOpen(false)}>
+            <ProfileIcon />
+          </Link>
+        </>
+      );
+      break;
+
+    case 'detalhesProduto':
+      centerContent = (
+        <>
+          <Link to="/" onClick={() => setIsMenuOpen(false)}>Página Inicial</Link>
+          <Link to="/categorias" onClick={() => setIsMenuOpen(false)}>Categorias</Link>
+          <Link to="/minhas-trocas" onClick={() => setIsMenuOpen(false)}>Minhas Trocas</Link>
+          <SearchBar />
+        </>
+      );
+      rightContent = (
+        <>
+          <Link to="/meu-perfil" className="icon-button" onClick={() => setIsMenuOpen(false)}>
+            <ProfileIcon />
+          </Link>
+        </>
+      );
+      break;
+
+    case 'ofertaItem':
+      rightContent = (
+        <>
+          <button className="icon-button" onClick={() => { alert('Notificações'); setIsMenuOpen(false); }}>
+            <NotificationIcon />
+          </button>
+          <Link to="/meu-perfil" className="icon-button" onClick={() => setIsMenuOpen(false)}>
+            <ProfileIcon />
+          </Link>
+        </>
+      );
+      break;
+
+      case 'configuracoes':
+  centerContent = (
+    <>
+      <Link to="/" onClick={() => setIsMenuOpen(false)}>Início</Link>
+      <Link to="/categorias" onClick={() => setIsMenuOpen(false)}>Categorias</Link>
+      <Link to="/favoritos" onClick={() => setIsMenuOpen(false)}>Favoritos</Link>
+      <Link to="/mensagens" onClick={() => setIsMenuOpen(false)}>Mensagens</Link>
+    </>
+  );
+  rightContent = (
+    <>
+      <button className="icon-button" onClick={() => { alert('Notificações'); setIsMenuOpen(false); }}>
+        <NotificationIcon />
       </button>
-    ),
-    chatIcon: (
-      <Link to="/mensagens" className="icon-button" aria-label="Mensagens">
-        <FiMessageSquare size={20} />
+      <Link to="/meu-perfil" className="icon-button" onClick={() => setIsMenuOpen(false)}>
+        <ProfileIcon />
       </Link>
-    )
-  };
+    </>
+  );
+  break;
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const menu = document.querySelector('.eco-menu');
-      if (menu) {
-        if (window.scrollY > 10) {
-          menu.classList.add('scrolled');
-        } else {
-          menu.classList.remove('scrolled');
-        }
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const getMenuConfig = () => {
-    const configs = {
-      '/': {
-        centerItems: [
-        ],
-        rightItems: [
-          <Link to="/cadastrar-item" key="cadastrar" className="auth-link primary">Cadastrar Item</Link>,
-          <Link to="/login" key="login" className="auth-link login">Login</Link>,
-        ]
-      },
-      '/login': null,
-      '/publicar-item': {
-        centerItems: [
-          { path: '/', label: 'Inicio' },
-          { path: '/categorias', label: 'Categorias' },
-          { path: '/meus-itens', label: 'Meus Itens' },
-          { path: '/mensagens', label: 'Mensagens' }
-        ],
-        rightItems: [
-          commonElements.notificationIcon,
-          commonElements.chatIcon,
-          commonElements.profileIcon
-        ]
-      },
-      '/meu-perfil': {
-        centerItems: [],
-        rightItems: [
-          <Link to="/configuracoes" key="settings" className="icon-button" aria-label="Configurações">
-            <FaCog size={20} />
-          </Link>,
-          commonElements.profileIcon
-        ]
-      },
-      '/detalhes-produto': {
-        centerItems: [
-          { path: '/', label: 'Página Inicial' },
-          { path: '/categorias', label: 'Categorias' },
-          { path: '/minhas-trocas', label: 'Minhas trocas' }
-        ],
-        rightItems: [
-          <div className="search-box" key="search">
-            <FiSearch className="search-icon" />
-            <input type="text" placeholder="Pesquisar" aria-label="Pesquisar" />
-          </div>,
-          commonElements.notificationIcon,
-          commonElements.chatIcon,
-          commonElements.profileIcon
-        ]
-      },
-      '/configuracoes': {
-        centerItems: [
-          { path: '/', label: 'Inicio' },
-          { path: '/categorias', label: 'Categorias' },
-          { path: '/favoritos', label: 'Favoritos' },
-          { path: '/mensagens', label: 'Mensagens' }
-        ],
-        rightItems: [
-          commonElements.notificationIcon,
-          commonElements.chatIcon,
-          commonElements.profileIcon
-        ]
-      },
-      '/mensagens': {
-        centerItems: [],
-        rightItems: [
-          commonElements.notificationIcon,
-          commonElements.profileIcon
-        ]
-      },
-      '/oferta-item': {
-        centerItems: [],
-        rightItems: [
-          commonElements.notificationIcon,
-          commonElements.profileIcon
-        ]
-      }
-    };
-    return configs[currentPath] || {
-      centerItems: [],
-      rightItems: [
-        commonElements.notificationIcon,
-        commonElements.chatIcon,
-        commonElements.profileIcon
-      ]
-    };
-  };
-
-  const config = getMenuConfig();
-  if (!config) return null;
+    default:
+      break;
+  }
 
   return (
     <header className="menu-container">
