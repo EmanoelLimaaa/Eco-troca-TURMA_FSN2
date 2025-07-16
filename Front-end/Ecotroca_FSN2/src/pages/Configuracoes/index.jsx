@@ -103,7 +103,7 @@ function Configuracoes() {
 
         </main>
 
-        {/* Coluna da Direita com o Perfil */}
+        {/* Coluna com o Perfil */}
         <aside className={style.colunaDireita}>
           <div className={style.perfilCard}>
             <p className={style.nomeUsuario}>Sofia Mendes</p>
