@@ -20,7 +20,7 @@ function Login() {
 
     if (email === "usuario@ecotroca.com" && senha === "123456") {
       alert("Login realizado com sucesso!");
-      navigate('/');
+      navigate('/');     
       // Aqui você pode redirecionar, ex: navigate('/perfil')
     } else {
       setErro("E-mail ou senha incorretos.");

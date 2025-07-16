@@ -48,12 +48,12 @@ export default function EcoTrocaMenu() {
         centerItems: [
         ],
         rightItems: [
-          <Link to="/cadastrar-item" key="cadastrar" className="auth-link primary">Cadastrar Item</Link>,
+          <Link to="/publicar" key="cadastrar" className="auth-link primary">Cadastrar Item</Link>,
           <Link to="/login" key="login" className="auth-link login">Login</Link>,
         ]
       },
       '/login': null,
-      '/publicar-item': {
+      '/publicar': {
         centerItems: [
           { path: '/', label: 'Inicio' },
           { path: '/categorias', label: 'Categorias' },
