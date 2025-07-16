@@ -1,7 +1,5 @@
-import { Link, useLocation } from 'react-router-dom';
-import { FiSearch, FiBell, FiMessageSquare } from 'react-icons/fi';
-import { FaRegUserCircle, FaCog } from 'react-icons/fa';
-import { useEffect } from 'react';
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import './EcoTrocaMenu.css';
 
 export default function EcoTrocaMenu() {
@@ -48,12 +46,12 @@ export default function EcoTrocaMenu() {
         centerItems: [
         ],
         rightItems: [
-          <Link to="/publicar" key="cadastrar" className="auth-link primary">Cadastrar Item</Link>,
+          <Link to="/cadastrar-item" key="cadastrar" className="auth-link primary">Cadastrar Item</Link>,
           <Link to="/login" key="login" className="auth-link login">Login</Link>,
         ]
       },
       '/login': null,
-      '/publicar': {
+      '/publicar-item': {
         centerItems: [
           { path: '/', label: 'Inicio' },
           { path: '/categorias', label: 'Categorias' },
@@ -133,20 +131,24 @@ export default function EcoTrocaMenu() {
   if (!config) return null;
 
   return (
-    <header className="eco-menu">
-      <div className="menu-left">{commonElements.logo}</div>
-      <nav className="menu-center">
-        <ul>
-          {config.centerItems.map((item, index) => (
-            <li key={index}>{item}</li>
-          ))}
-        </ul>
-      </nav>
-      <div className="menu-right">
-        {config.rightItems.map((item, index) => (
-          <div key={index}>{item}</div>
-        ))}
+    <header className="menu-container">
+      <div className="menu-header">
+        <div className="menu-left">
+          <Link to="/" className="logo" onClick={() => setIsMenuOpen(false)}>EcoTroca</Link>
+        </div>
+        <button className="hamburger-button" onClick={toggleMenu}>
+          <HamburgerIcon />
+        </button>
+        <nav className="menu-center desktop-only">{centerContent}</nav>
+        <div className="menu-right desktop-only">{rightContent}</div>
+      </div>
+
+      <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+        <nav className="menu-center">{centerContent}</nav>
+        <div className="menu-right">{rightContent}</div>
       </div>
     </header>
   );
-}
+};
+
+export default EcoTrocaMenu;
