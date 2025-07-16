@@ -7,8 +7,7 @@ function Configuracoes() {
     <>
     <EcoTrocaMenu variant="configuracoes" />
 
-      {/* Container principal abaixo do menu */}
-      <div className={style.container} style={{ paddingTop: '65px' /* altura do menu para não ficar atrás */ }}>
+      <div className={style.container} style={{ paddingTop: '65px' }}>
         <h1 className={style.titulo}>Configurações</h1>
 
         <div className={style.grid}>
