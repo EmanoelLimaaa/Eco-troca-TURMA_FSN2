@@ -122,6 +122,28 @@ const EcoTrocaMenu = ({ variant }) => {
   );
   break;
 
+  case 'perfilUsuario':
+  centerContent = (
+    <>
+      <Link to="/" onClick={() => setIsMenuOpen(false)}>Início</Link>
+      <Link to="/categorias" onClick={() => setIsMenuOpen(false)}>Categorias</Link>
+      <Link to="/favoritos" onClick={() => setIsMenuOpen(false)}>Favoritos</Link>
+      <Link to="/mensagens" onClick={() => setIsMenuOpen(false)}>Mensagens</Link>
+    </>
+  );
+  rightContent = (
+    <>
+    <SearchBar />
+      <button className="icon-button" onClick={() => { alert('Notificações'); setIsMenuOpen(false); }}>
+        <NotificationIcon />
+      </button>
+      <Link to="/meu-perfil" className="icon-button" onClick={() => setIsMenuOpen(false)}>
+        <ProfileIcon />
+      </Link>
+    </>
+  );
+  break;
+
     default:
       break;
   }

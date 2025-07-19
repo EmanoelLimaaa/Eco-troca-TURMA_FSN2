@@ -6,7 +6,8 @@ import Login from './pages/Login';
 import MeuPerfil from './pages/MeuPerfil';
 import CadUsuario from './pages/CadUsuario';
 import TelaProposta from './pages/TelaPropostas';
-import Configuracoes from './pages/Configuracoes'; 
+import Configuracoes from './pages/Configuracoes';
+import PerfilUsuario from './pages/PerfilUsuario'; 
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/CadUsuario" element={<CadUsuario />} />
         <Route path="/propostas/:id" element={<TelaProposta />} />
         <Route path="/configuracoes" element={<Configuracoes />} />
+        <Route path="/perfilusuario" element={<PerfilUsuario />} />
         
       </Routes>
     </BrowserRouter>
