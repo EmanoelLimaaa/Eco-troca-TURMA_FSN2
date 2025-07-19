@@ -114,7 +114,7 @@ h1 {
   caret-color: #000;
   width: 100%;
   box-sizing: border-box;
-  resize: vertical;
+  resize: none;
 }
 
 ::placeholder {
@@ -192,6 +192,7 @@ label {
   textarea,
   select {
     font-size: 0.95rem;
+    resize: none;
   }
 
   .botao {
