@@ -1,0 +1,81 @@
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+  transition: background 0.2s;
+  background-color: #fff;
+}
+
+.card:hover {
+  background-color: #f0f0f0;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.nome {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mensagem {
+  font-size: 0.9rem;
+  color: #444;
+  margin-top: 0.2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.data {
+  font-size: 0.75rem;
+  color: #888;
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .info {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
+
+  .data {
+    margin-left: 0;
+    align-self: flex-end;
+    margin-top: 0.5rem;
+  }
+
+  .mensagem {
+    max-width: 100%;
+    white-space: normal;
+  }
+}
