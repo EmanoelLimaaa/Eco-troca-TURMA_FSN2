@@ -63,7 +63,7 @@ body{
   transition: background-color 0.3s ease;
 }
 
-/* Adiciona o efeito hover em todos os itens, exceto no de Sair */
+
 .item:hover:not(:has(.sair)) {
   background-color: #f1f1f1;
   cursor: pointer;
@@ -148,69 +148,10 @@ body{
   color: var(--cor-sair);
   font-weight: 600;
   cursor: pointer;
-  padding: 8px; /* Adiciona área de clique */
+  padding: 8px; 
 }
 
-/* CARD DE PERFIL */
-.colunaDireita {
-  position: sticky;
-  top: 40px; 
-}
 
-.perfilCard {
-  background-color: var(--cor-fundo-card);
-  border: 1px solid #eee;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  padding: 30px 20px;
-  text-align: center;
-}
-
-.nomeUsuario {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-top: 1rem;
-}
-
-.handleUsuario {
-  font-size: 1rem;
-  color: var(--cor-subtexto);
-  margin-top: 4px;
-  margin-bottom: 24px;
-}
-
-.linksPerfil {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  text-align: left;
-}
-
-.linksPerfil li a {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  color: var(--cor-principal-texto);
-  border-radius: 6px;
-  font-weight: 500;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.linksPerfil li a:hover {
-  background-color: #f1f1f1;
-}
-
-.linksPerfil li a.linkAtivo {
-  background-color: var(--cor-primaria);
-  color: white;
-}
-
-.linksPerfil li a.linkAtivo .seta {
-  color: white;
-}
 
 @media (max-width: 900px) {
   .container {
@@ -227,12 +168,6 @@ body{
     gap: 30px;
   }
   
-  .colunaDireita {
-    position: static;
-    top: auto; 
-  }
-  
-  .perfilCard {
-    padding: 20px 15px;
-  }
+
+
 }
