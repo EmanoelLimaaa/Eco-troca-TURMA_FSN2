@@ -1,6 +1,7 @@
 import React from 'react';
 import style from './Configuracoes.module.css';
 import EcoTrocaMenu from '../../components/EcoTrocaMenu';
+import Footer from '../../components/footer';
 
 function Configuracoes() {
   return (
@@ -108,7 +109,9 @@ function Configuracoes() {
           </main>
 
         </div>
+         
       </div>
+      <Footer />
     </>
   );
 }

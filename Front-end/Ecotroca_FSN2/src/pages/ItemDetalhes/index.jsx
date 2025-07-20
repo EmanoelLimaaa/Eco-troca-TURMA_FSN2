@@ -2,6 +2,8 @@ import React from "react";
 import styles from "./ItemDetalhes.module.css";
 import { useParams, useNavigate } from "react-router-dom";
 import EcoTrocaMenu from "../../components/EcoTrocaMenu";
+import Footer from '../../components/footer';
+
 
 import bicicletaImg from '../../assets/imagensdaHome/bicicletademontanha.jpg';
 import livroImg from '../../assets/imagensdaHome/Livro-Senhordosaneis.jpg';
@@ -101,7 +103,9 @@ const DetalhesItem = () => {
           Faça login para propor uma troca
         </p>
       </main>
+      <Footer />
     </div>
+
   );
 };
 
