@@ -1,42 +1,39 @@
-/* Container geral com fundo degradê EcoTroca */
 .container {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to right, #d9f8e5, #c6f3db);
+  background: linear-gradient(to right, #ccf6e4, #b8f1d8);
   padding: 20px;
   color: black;
 }
 
-/* Formulário centralizado com sombra e borda arredondada */
 .formBox {
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 2rem;
   border-radius: 1rem;
-  box-shadow: 0 0 20px rgba(20, 105, 20, 0.847);
+  box-shadow: 0 0 20px rgba(72, 187, 120, 0.4);
   width: 100%;
   max-width: 500px;
-  
 }
 
 .inputGroup input,
 .inputGroup select {
-  color: #2d6a4f;
+  color: #247a49;
   box-sizing: border-box;
   width: 100%;
 }
 
-/* Título centralizado */
+
 .title {
   text-align: center;
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
-  color: #2d6a4f;
+  color: #247a49;
   font-weight: 700;
 }
 
-/* Agrupamento de input e ícone */
+
 .inputGroup {
   position: relative;
   margin-bottom: 1.2rem;
@@ -47,12 +44,25 @@
 .inputGroup select {
   width: 100%;
   padding: 0.75rem 1rem 0.75rem 2.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid #a8e6cf;
   border-radius: 999px;
   font-size: 1rem;
   outline: none;
-  transition: border 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background-color: #ffffff;
+  color: #247a49;
 }
+
+.inputGroup input::placeholder,
+.inputGroup select::placeholder {
+  color: #38b000;
+  opacity: 1;
+}
+
+.inputGroup select {
+  color: #38b000;
+}
+
 
 .inputGroup input[type="file"] {
   padding-left: 2.5rem;
@@ -61,20 +71,19 @@
 
 .inputGroup input:focus,
 .inputGroup select:focus {
-  border-color: #2d6a4f;
+  border-color: #38b000;
+  box-shadow: 0 0 8px rgba(56, 176, 0, 0.4);
 }
 
-/* Ícones à esquerda */
 .icon {
   position: absolute;
   top: 50%;
   left: 15px;
   transform: translateY(-50%);
-  color: #2d6a4f;
+  color: #38b000;
   font-size: 1rem;
 }
 
-/* Botão com degradê */
 .button {
   width: 100%;
   padding: 0.75rem;
@@ -82,17 +91,17 @@
   border-radius: 999px;
   font-size: 1rem;
   font-weight: bold;
-  background: linear-gradient(to right, #38b000, #2d6a4f);
+  background: linear-gradient(to right, #38b000, #70e000);
   color: white;
   cursor: pointer;
-  transition: opacity 0.3s;
+  transition: transform 0.2s, opacity 0.3s;
 }
 
 .button:hover {
   opacity: 0.9;
+  transform: scale(1.03);
 }
 
-/* Responsivo */
 @media (max-width: 480px) {
   .formBox {
     padding: 1.5rem;

@@ -1,6 +1,7 @@
 import React from 'react';
 import style from './Configuracoes.module.css';
 import EcoTrocaMenu from '../../components/EcoTrocaMenu';
+import Footer from '../../components/footer';
 
 function Configuracoes() {
   return (
@@ -107,22 +108,10 @@ function Configuracoes() {
 
           </main>
 
-          {/* Coluna com o Perfil */}
-          <aside className={style.colunaDireita}>
-            <div className={style.perfilCard}>
-              <p className={style.nomeUsuario}>Sofia Mendes</p>
-              <p className={style.handleUsuario}>@sofiamendes</p>
-
-              <ul className={style.linksPerfil}>
-                <li><a href="#"><span>Perfil</span> <span className={style.seta}>&gt;</span></a></li>
-                <li><a href="#"><span>Itens</span> <span className={style.seta}>&gt;</span></a></li>
-                <li><a href="#"><span>Favoritos</span> <span className={style.seta}>&gt;</span></a></li>
-                <li><a href="#" className={style.linkAtivo}><span>Configurações</span> <span className={style.seta}>&gt;</span></a></li>
-              </ul>
-            </div>
-          </aside>
         </div>
+         
       </div>
+      <Footer />
     </>
   );
 }

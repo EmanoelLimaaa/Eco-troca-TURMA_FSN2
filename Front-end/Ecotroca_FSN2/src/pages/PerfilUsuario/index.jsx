@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import style from "./PerfilUsuario.module.css";
 import EcoTrocaMenu from "../../components/EcoTrocaMenu";
+import Footer from '../../components/footer';
 
 function PerfilUsuario() {
   const [editMode, setEditMode] = useState(false);
@@ -203,6 +204,7 @@ function PerfilUsuario() {
           </div>
         </div>
       )}
+      <Footer />
     </>
   );
 }

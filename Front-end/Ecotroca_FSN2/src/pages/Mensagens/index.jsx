@@ -3,6 +3,7 @@ import MensagemCard from '../../components/MensagemCard';
 import style from './Mensagens.module.css';
 import EcoTrocaMenu from '../../components/EcoTrocaMenu';
 import AvatarMensagem from '../../assets/AvatarMensagem/avatar.png';
+import Footer from '../../components/footer';
 
 const mensagensFake = [
   {
@@ -126,11 +127,9 @@ function Mensagens() {
           </aside>
         </div>
       </div>
-
-      <footer className={style.footer}>
-        EcoTroca © 2025. Todos os direitos reservados.
-      </footer>
+      <Footer />
     </div>
+
   );
 }
 
