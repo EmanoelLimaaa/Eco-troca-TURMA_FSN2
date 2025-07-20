@@ -36,7 +36,9 @@ function Cadastro() {
 
         <div className={styles.inputGroup}>
           <FontAwesomeIcon icon={faUser} className={styles.icon} />
-          <input type="number" name="idade" placeholder="Idade" value={form.idade} onChange={handleChange} required />
+          <input type="number" name="idade" placeholder="Idade" value={form.idade} onChange={handleChange} min="0" required />
+
+
         </div>
 
         <div className={styles.inputGroup}>

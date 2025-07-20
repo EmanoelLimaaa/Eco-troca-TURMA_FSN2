@@ -8,7 +8,7 @@ import CadUsuario from './pages/CadUsuario';
 import TelaProposta from './pages/TelaPropostas';
 import Configuracoes from './pages/Configuracoes';
 import PerfilUsuario from './pages/PerfilUsuario'; 
-import Mensagens from './pages/Mensagens';
+import Mensagens from './pages/Mensagens'; 
 
 
 function App() {
@@ -25,6 +25,7 @@ function App() {
         <Route path="/configuracoes" element={<Configuracoes />} />
         <Route path="/perfilusuario" element={<PerfilUsuario />} />
         <Route path="/mensagens" element={<Mensagens />} />
+        
         
       </Routes>
     </BrowserRouter>
