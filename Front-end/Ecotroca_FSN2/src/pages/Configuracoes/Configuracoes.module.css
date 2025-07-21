@@ -1,28 +1,19 @@
 
-:root {
-  --cor-principal-texto: #222;
-  --cor-subtexto: #888;
-  --cor-fundo-card: #ffffff;
-  --cor-borda: #ccc;
-  --cor-primaria: #54D12B; 
-  --cor-sair: #ef4444;
-}
 
-body{
-  background-color: #fff;
-}
 .container {
   max-width: 1200px;
   margin: 40px auto;
   padding: 2rem;
-  color: var(--cor-principal-texto);
-  background-color: white;
+  color: var(--cor-texto);
+  background-color: var(--cor-fundo);
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
 .titulo {
   font-size: 2rem;
   font-weight: 600;
-  color: #111;
+  color: var(--cor-titulo);
   margin-bottom: 2rem;
 }
 
@@ -40,7 +31,7 @@ body{
 }
 
 .secao {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--cor-borda);
   padding-bottom: 1.5rem;
 }
 
@@ -52,6 +43,7 @@ body{
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
+  color: var(--cor-texto);
 }
 
 .item {
@@ -61,28 +53,24 @@ body{
   padding: 12px 8px;
   border-radius: 6px;
   transition: background-color 0.3s ease;
+  background-color: transparent;
 }
 
-/* Adiciona o efeito hover em todos os itens, exceto no de Sair */
-.item:hover:not(:has(.sair)) {
-  background-color: #f1f1f1;
+.item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
   cursor: pointer;
-}
-
-.itemClicavel:hover {
-  background-color: transparent !important;
-  cursor: default;
 }
 
 .item strong {
   font-size: 1rem;
   font-weight: 500;
   display: block;
+  color: var(--cor-texto);
 }
 
 .item p {
   font-size: 0.9rem;
-  color: var(--cor-subtexto);
+  color: var(--cor-texto);
   margin-top: 4px;
 }
 
@@ -99,6 +87,7 @@ body{
   color: var(--cor-subtexto);
 }
 
+/* Toggle Switch */
 .toggleSwitch {
   position: relative;
   display: inline-block;
@@ -144,95 +133,51 @@ body{
   transform: translateX(22px);
 }
 
-.sair {
-  color: var(--cor-sair);
-  font-weight: 600;
-  cursor: pointer;
-  padding: 8px; /* Adiciona área de clique */
-}
-
-/* CARD DE PERFIL */
-.colunaDireita {
-  position: sticky;
-  top: 40px; 
-}
-
-.perfilCard {
-  background-color: var(--cor-fundo-card);
-  border: 1px solid #eee;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  padding: 30px 20px;
-  text-align: center;
-}
-
-.nomeUsuario {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-top: 1rem;
-}
-
-.handleUsuario {
-  font-size: 1rem;
-  color: var(--cor-subtexto);
-  margin-top: 4px;
-  margin-bottom: 24px;
-}
-
-.linksPerfil {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  text-align: left;
-}
-
-.linksPerfil li a {
-  display: flex;
-  justify-content: space-between;
+.botaoSair {
+  display: inline-flex;
   align-items: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  color: var(--cor-principal-texto);
-  border-radius: 6px;
-  font-weight: 500;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
+  justify-content: center;
+  gap: 0.5rem;
 
-.linksPerfil li a:hover {
-  background-color: #f1f1f1;
-}
-
-.linksPerfil li a.linkAtivo {
-  background-color: var(--cor-primaria);
+  background-color: #ef4444; 
   color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.linksPerfil li a.linkAtivo .seta {
-  color: white;
+.botaoSair:hover {
+  background-color: #dc2626; 
+  transform: scale(1.02);
 }
 
+.botaoSair:active {
+  transform: scale(0.98);
+}
+
+/* Responsivo */
 @media (max-width: 900px) {
   .container {
     margin: 20px auto;
     padding: 1rem;
   }
-  
+
   .titulo {
     font-size: 1.5rem;
   }
-  
+
   .grid {
     grid-template-columns: 1fr;
     gap: 30px;
   }
-  
-  .colunaDireita {
-    position: static;
-    top: auto; 
-  }
-  
-  .perfilCard {
-    padding: 20px 15px;
-  }
+}
+
+.pagina {
+  background-color: var(--cor-fundo);
+  min-height: 100vh;
 }

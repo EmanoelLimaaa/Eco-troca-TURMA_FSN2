@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EcoTrocaMenu from '../../components/EcoTrocaMenu';
+import Footer from '../../components/Footer';
 
 import bicicletaImg from '../../assets/imagensdaHome/bicicletademontanha.jpg';
 import livroImg from '../../assets/imagensdaHome/Livro-Senhordosaneis.jpg';
@@ -125,7 +126,7 @@ const Home = () => {
         ))}
       </div>
 
-      <footer className={styles.footer}>©2025 EcoTroca. Todos os direitos reservados.</footer>
+      <Footer />
     </div>
   );
 };

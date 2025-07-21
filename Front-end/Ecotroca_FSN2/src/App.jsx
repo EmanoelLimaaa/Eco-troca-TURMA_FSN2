@@ -22,6 +22,7 @@ function App() {
         <Route path="/propostas/:id" element={<TelaProposta />} />
         <Route path="/configuracoes" element={<Configuracoes />} />
         
+        
       </Routes>
     </BrowserRouter>
   );
