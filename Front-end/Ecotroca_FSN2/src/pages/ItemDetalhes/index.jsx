@@ -103,7 +103,9 @@ const DetalhesItem = () => {
           Faça login para propor uma troca
         </p>
       </main>
+      <Footer />
     </div>
+
   );
 };
 

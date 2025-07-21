@@ -5,6 +5,7 @@ import EcoTrocaMenu from '../../components/EcoTrocaMenu';
 import AvatarMensagem from '../../assets/AvatarMensagem/avatar.png';
 import Footer from '../../components/Footer';
 
+
 const mensagensFake = [
   {
     id: 1,

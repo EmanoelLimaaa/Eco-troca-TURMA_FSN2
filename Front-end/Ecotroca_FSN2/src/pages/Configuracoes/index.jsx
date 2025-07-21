@@ -5,6 +5,7 @@ import EcoTrocaMenu from '../../components/EcoTrocaMenu';
 import { FiLogOut } from 'react-icons/fi';
 import Footer from '../../components/Footer';
 
+
 function Configuracoes() {
   const [idioma, setIdioma] = useState("Português");
   const [temaEscuro, setTemaEscuro] = useState(false);
@@ -37,6 +38,7 @@ function Configuracoes() {
         <h1 className={style.titulo}>Configurações</h1>
 
         <div className={style.grid}>
+
           <main className={style.colunaEsquerda}>
 
             {/* Geral */}
@@ -44,31 +46,34 @@ function Configuracoes() {
               <h2 className={style.secaoTitulo}>Geral</h2>
 
               <div className={style.item} onClick={() => setIdioma(idioma === "Português" ? "Inglês" : "Português")}>
+
                 <div>
                   <strong>Idioma</strong>
                   <p>Altere o idioma do aplicativo</p>
                 </div>
                 <div className={style.valorItem}>
+
                   <span>{idioma}</span>
                   <span className={style.seta}>&gt;</span>
                 </div>
               </div>
 
               <div className={style.item} onClick={alternarTema}>
+
                 <div>
                   <strong>Tema</strong>
                   <p>Altere o tema do aplicativo</p>
                 </div>
                 <div className={style.valorItem}>
+
                   <span>{temaEscuro ? "Escuro" : "Claro"}</span>
-                  <span className={style.seta}>&gt;</span>
-                </div>
-              </div>
-            </section>
+
+
 
             {/* Notificações */}
             <section className={style.secao}>
               <h2 className={style.secaoTitulo}>Notificações</h2>
+
 
               <div className={style.item}>
                 <div>
@@ -76,6 +81,7 @@ function Configuracoes() {
                   <p>Receba notificações sobre novos itens</p>
                 </div>
                 <label className={style.toggleSwitch}>
+
                   <input
                     type="checkbox"
                     checked={notifItens}
@@ -85,25 +91,30 @@ function Configuracoes() {
                 </label>
               </div>
 
+
               <div className={style.item}>
                 <div>
                   <strong>Mensagens</strong>
                   <p>Receba notificações sobre mensagens</p>
                 </div>
                 <label className={style.toggleSwitch}>
+
                   <input
                     type="checkbox"
                     checked={notifMensagens}
                     onChange={() => setNotifMensagens(!notifMensagens)}
                   />
+
                   <span className={style.slider}></span>
                 </label>
               </div>
             </section>
 
+
             {/* Privacidade */}
             <section className={style.secao}>
               <h2 className={style.secaoTitulo}>Privacidade</h2>
+
 
               <div className={style.item}>
                 <div>
@@ -112,6 +123,8 @@ function Configuracoes() {
                 </div>
                 <span className={style.seta}>&gt;</span>
               </div>
+
+
 
               <div className={style.item}>
                 <div>
@@ -126,18 +139,11 @@ function Configuracoes() {
             <section className={style.secao}>
               <h2 className={style.secaoTitulo}>Sobre</h2>
 
+
               <div className={style.item}>
                 <div>
                   <strong>Sobre o app</strong>
                   <p>Saiba mais sobre o aplicativo</p>
-                </div>
-                <span className={style.seta}>&gt;</span>
-              </div>
-
-              <div className={style.item}>
-                <div>
-                  <strong>Termos e privacidade</strong>
-                  <p>Termos de serviço e política de privacidade</p>
                 </div>
                 <span className={style.seta}>&gt;</span>
               </div>
@@ -150,6 +156,7 @@ function Configuracoes() {
         </div>
         </div>
       </div>
+
 
       <Footer />
     </>

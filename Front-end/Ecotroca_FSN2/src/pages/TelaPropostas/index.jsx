@@ -10,7 +10,7 @@ import mesaImg from '../../assets/imagensdaHome/mesadejantar.jpg';
 import sofaImg from '../../assets/imagensdaHome/sofa2lugares.jpg';
 import guitarraImg from '../../assets/imagensdaHome/guitarra-eletrica.jpg';
 
-// Produtos cadastrados
+// Produtos cadastraos
 const produtos = [
   { id: 1, nome: "Bicicleta de montanha", imagem: bicicletaImg },
   { id: 2, nome: "Livro O Senhor dos Anéis", imagem: livroImg },

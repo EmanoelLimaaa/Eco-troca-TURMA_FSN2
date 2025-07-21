@@ -56,8 +56,10 @@
   background-color: transparent;
 }
 
+
 .item:hover {
   background-color: rgba(0, 0, 0, 0.05);
+
   cursor: pointer;
 }
 
@@ -160,6 +162,7 @@
   transform: scale(0.98);
 }
 
+
 /* Responsivo */
 @media (max-width: 900px) {
   .container {
@@ -175,9 +178,11 @@
     grid-template-columns: 1fr;
     gap: 30px;
   }
+
 }
 
 .pagina {
   background-color: var(--cor-fundo);
   min-height: 100vh;
 }
+
