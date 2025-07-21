@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { AuthContext } from './AuthContext';
 import './EcoTrocaMenu.css';
 
+// os icones
 const NotificationIcon = () => (
   <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" height="20" width="20" xmlns="http://www.w3.org/2000/svg">
     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
@@ -21,149 +23,107 @@ const HamburgerIcon = () => (
   </svg>
 );
 
-const EcoTrocaMenu = ({ variant }) => {
+// a configuração do menu
+const menuConfig = {
+  loggedOut: [
+    { label: 'Início', path: '/' },
+    { label: 'Categorias', path: '/' },
+    { label: 'Pulicar Item', path: '/publicar', type: 'button-green' },
+    { label: 'Login', path: '/login', type: 'button-gray' },
+    { label: 'Cadastro', path: '/CadUsuario', type: 'button-gray' },
+  ],
+  loggedIn: [
+    { label: 'Início', path: '/' },
+    { label: 'Categorias', path: '/' },
+    { label: 'Meus Itens', path: '/meuperfil' },
+    { label: 'Mensagens', path: '/mensagens' },
+    { label: 'Minhas Trocas', path: '/meuperfil' },
+    { label: 'Aceitar Oferta', path: '/propostas/:id' },
+    { label: 'Configurações', path: '/configuracoes' },
+    { label: 'Pesquisar', type: 'search', showIn: ['item-detalhes', 'perfil-usuario'] },
+    { label: 'Notificações', action: () => alert('Notificações'), type: 'icon-button' },
+    { label: 'Meu Perfil', path: '/meuperfil', type: 'icon-button', icon: <ProfileIcon /> },
+  ],
+};
+
+const EcoTrocaMenu = ({ activePage }) => {
+  const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const menuItems = isLoggedIn ? menuConfig.loggedIn : menuConfig.loggedOut;
+
+  const renderMenuItem = (item) => {
+    if (item.showIn && !item.showIn.includes(activePage)) {
+      return null;
+    }
+
+    if (item.type === 'button-green' || item.type === 'button-gray') {
+      return (
+        <button
+          key={item.label}
+          className={`button ${item.type}`}
+          onClick={() => {
+            navigate(item.path);
+            setIsMenuOpen(false);
+          }}
+        >
+          {item.label}
+        </button>
+      );
+    } else if (item.type === 'icon-button') {
+      return (
+        <button
+          key={item.label}
+          className="icon-button"
+          onClick={() => {
+            if (item.action) item.action();
+            if (item.path) navigate(item.path);
+            setIsMenuOpen(false);
+          }}
+        >
+          {item.icon || item.label}
+        </button>
+      );
+    } else if (item.type === 'search') {
+      return <SearchBar key={item.label} />;
+    }
+    return (
+      <Link
+        key={item.label}
+        to={item.path}
+        className={item.path === activePage ? 'active' : ''}
+        onClick={() => setIsMenuOpen(false)}
+      >
+        {item.label}
+      </Link>
+    );
   };
-
-  let centerContent = null;
-  let rightContent = null;
-
-  switch (variant) {
-    case 'home':
-      rightContent = (
-        <>
-          <button className="button button-green" onClick={() => { navigate('/publicar'); setIsMenuOpen(false); }}>
-            Cadastrar Item
-          </button>
-          <button className="button button-gray" onClick={() => { navigate('/login'); setIsMenuOpen(false); }}>
-            Login
-          </button>
-        </>
-      );
-      break;
-
-    case 'login':
-      break;
-
-    case 'publicarItem':
-      centerContent = (
-        <>
-          <Link to="/" onClick={() => setIsMenuOpen(false)}>Início</Link>
-          <Link to="/categorias" onClick={() => setIsMenuOpen(false)}>Categorias</Link>
-          <Link to="/meus-itens" onClick={() => setIsMenuOpen(false)}>Meus Itens</Link>
-          <Link to="/mensagens" onClick={() => setIsMenuOpen(false)}>Mensagens</Link>
-        </>
-      );
-      rightContent = (
-        <>
-          <button className="icon-button" onClick={() => { alert('Notificações'); setIsMenuOpen(false); }}>
-            <NotificationIcon />
-          </button>
-          <Link to="/meu-perfil" className="icon-button" onClick={() => setIsMenuOpen(false)}>
-            <ProfileIcon />
-          </Link>
-        </>
-      );
-      break;
-
-    case 'detalhesProduto':
-      centerContent = (
-        <>
-          <Link to="/" onClick={() => setIsMenuOpen(false)}>Página Inicial</Link>
-          <Link to="/categorias" onClick={() => setIsMenuOpen(false)}>Categorias</Link>
-          <Link to="/minhas-trocas" onClick={() => setIsMenuOpen(false)}>Minhas Trocas</Link>
-          <SearchBar />
-        </>
-      );
-      rightContent = (
-        <>
-          <Link to="/meu-perfil" className="icon-button" onClick={() => setIsMenuOpen(false)}>
-            <ProfileIcon />
-          </Link>
-        </>
-      );
-      break;
-
-    case 'ofertaItem':
-      rightContent = (
-        <>
-          <button className="icon-button" onClick={() => { alert('Notificações'); setIsMenuOpen(false); }}>
-            <NotificationIcon />
-          </button>
-          <Link to="/meu-perfil" className="icon-button" onClick={() => setIsMenuOpen(false)}>
-            <ProfileIcon />
-          </Link>
-        </>
-      );
-      break;
-
-      case 'configuracoes':
-  centerContent = (
-    <>
-      <Link to="/" onClick={() => setIsMenuOpen(false)}>Início</Link>
-      <Link to="/categorias" onClick={() => setIsMenuOpen(false)}>Categorias</Link>
-      <Link to="/favoritos" onClick={() => setIsMenuOpen(false)}>Favoritos</Link>
-      <Link to="/mensagens" onClick={() => setIsMenuOpen(false)}>Mensagens</Link>
-    </>
-  );
-  rightContent = (
-    <>
-      <button className="icon-button" onClick={() => { alert('Notificações'); setIsMenuOpen(false); }}>
-        <NotificationIcon />
-      </button>
-      <Link to="/meu-perfil" className="icon-button" onClick={() => setIsMenuOpen(false)}>
-        <ProfileIcon />
-      </Link>
-    </>
-  );
-  break;
-
-  case 'perfilUsuario':
-  centerContent = (
-    <>
-      <Link to="/" onClick={() => setIsMenuOpen(false)}>Início</Link>
-      <Link to="/categorias" onClick={() => setIsMenuOpen(false)}>Categorias</Link>
-      <Link to="/favoritos" onClick={() => setIsMenuOpen(false)}>Favoritos</Link>
-      <Link to="/mensagens" onClick={() => setIsMenuOpen(false)}>Mensagens</Link>
-    </>
-  );
-  rightContent = (
-    <>
-    <SearchBar />
-      <button className="icon-button" onClick={() => { alert('Notificações'); setIsMenuOpen(false); }}>
-        <NotificationIcon />
-      </button>
-      <Link to="/meu-perfil" className="icon-button" onClick={() => setIsMenuOpen(false)}>
-        <ProfileIcon />
-      </Link>
-    </>
-  );
-  break;
-
-    default:
-      break;
-  }
 
   return (
     <header className="menu-container">
       <div className="menu-header">
         <div className="menu-left">
-          <Link to="/" className="logo" onClick={() => setIsMenuOpen(false)}>EcoTroca</Link>
+          <Link to="/" className="logo" onClick={() => setIsMenuOpen(false)}>
+            EcoTroca
+          </Link>
         </div>
-        <button className="hamburger-button" onClick={toggleMenu}>
+        <button className="hamburger-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <HamburgerIcon />
         </button>
-        <nav className="menu-center desktop-only">{centerContent}</nav>
-        <div className="menu-right desktop-only">{rightContent}</div>
+        <nav className="menu-center desktop-only">
+          {menuItems
+            .filter((item) => !item.type || item.type === 'search')
+            .map(renderMenuItem)}
+        </nav>
+        <div className="menu-right desktop-only">
+          {menuItems
+            .filter((item) => item.type && item.type !== 'search')
+            .map(renderMenuItem)}
+        </div>
       </div>
-
       <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
-        <nav className="menu-center">{centerContent}</nav>
-        <div className="menu-right">{rightContent}</div>
+        {menuItems.map(renderMenuItem)}
       </div>
     </header>
   );
