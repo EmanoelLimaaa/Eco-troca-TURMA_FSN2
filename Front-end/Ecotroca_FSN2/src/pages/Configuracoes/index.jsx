@@ -1,73 +1,121 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import style from './Configuracoes.module.css';
 import EcoTrocaMenu from '../../components/EcoTrocaMenu';
-import Footer from '../../components/footer';
+import { FiLogOut } from 'react-icons/fi';
+import Footer from '../../components/Footer';
+
 
 function Configuracoes() {
+  const [idioma, setIdioma] = useState("Português");
+  const [temaEscuro, setTemaEscuro] = useState(false);
+  const [notifItens, setNotifItens] = useState(false);
+  const [notifMensagens, setNotifMensagens] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (temaEscuro) {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.remove('dark-theme');
+    }
+  }, [temaEscuro]);
+
+  const alternarTema = () => {
+    setTemaEscuro((temaAtual) => !temaAtual);
+  };
+
+  const handleLogout = () => {
+    alert("Você saiu do aplicativo.");
+    navigate('/login');
+  };
+
   return (
     <>
-    <EcoTrocaMenu variant="configuracoes" />
-
+      <EcoTrocaMenu variant="configuracoes" />
+      <div className={style.pagina}>
       <div className={style.container} style={{ paddingTop: '65px' }}>
         <h1 className={style.titulo}>Configurações</h1>
 
         <div className={style.grid}>
-          {/* Coluna da Esquerda com as Opções */}
+
           <main className={style.colunaEsquerda}>
 
-            {/* Seção Geral */}
+            {/* Geral */}
             <section className={style.secao}>
               <h2 className={style.secaoTitulo}>Geral</h2>
-              <div className={style.item}>
+
+              <div className={style.item} onClick={() => setIdioma(idioma === "Português" ? "Inglês" : "Português")}>
+
                 <div>
                   <strong>Idioma</strong>
                   <p>Altere o idioma do aplicativo</p>
                 </div>
                 <div className={style.valorItem}>
-                  <span>Português</span>
+
+                  <span>{idioma}</span>
                   <span className={style.seta}>&gt;</span>
                 </div>
               </div>
-              <div className={style.item}>
+
+              <div className={style.item} onClick={alternarTema}>
+
                 <div>
                   <strong>Tema</strong>
                   <p>Altere o tema do aplicativo</p>
                 </div>
                 <div className={style.valorItem}>
-                  <span>Sistema</span>
-                  <span className={style.seta}>&gt;</span>
-                </div>
-              </div>
-            </section>
 
-            {/* Seção Notificações */}
+                  <span>{temaEscuro ? "Escuro" : "Claro"}</span>
+
+
+
+            {/* Notificações */}
             <section className={style.secao}>
               <h2 className={style.secaoTitulo}>Notificações</h2>
+
+
               <div className={style.item}>
                 <div>
                   <strong>Novos itens</strong>
                   <p>Receba notificações sobre novos itens</p>
                 </div>
                 <label className={style.toggleSwitch}>
-                  <input type="checkbox" />
+
+                  <input
+                    type="checkbox"
+                    checked={notifItens}
+                    onChange={() => setNotifItens(!notifItens)}
+                  />
                   <span className={style.slider}></span>
                 </label>
               </div>
+
+
               <div className={style.item}>
                 <div>
                   <strong>Mensagens</strong>
                   <p>Receba notificações sobre mensagens</p>
                 </div>
                 <label className={style.toggleSwitch}>
-                  <input type="checkbox" defaultChecked={true} />
+
+                  <input
+                    type="checkbox"
+                    checked={notifMensagens}
+                    onChange={() => setNotifMensagens(!notifMensagens)}
+                  />
+
                   <span className={style.slider}></span>
                 </label>
               </div>
             </section>
 
-            {/* Seção Privacidade */}
+
+            {/* Privacidade */}
             <section className={style.secao}>
               <h2 className={style.secaoTitulo}>Privacidade</h2>
+
+
               <div className={style.item}>
                 <div>
                   <strong>Informações pessoais</strong>
@@ -75,6 +123,9 @@ function Configuracoes() {
                 </div>
                 <span className={style.seta}>&gt;</span>
               </div>
+
+
+
               <div className={style.item}>
                 <div>
                   <strong>Preferências de privacidade</strong>
@@ -84,9 +135,11 @@ function Configuracoes() {
               </div>
             </section>
 
-            {/* Seção Sobre */}
+            {/* Sobre */}
             <section className={style.secao}>
               <h2 className={style.secaoTitulo}>Sobre</h2>
+
+
               <div className={style.item}>
                 <div>
                   <strong>Sobre o app</strong>
@@ -94,23 +147,17 @@ function Configuracoes() {
                 </div>
                 <span className={style.seta}>&gt;</span>
               </div>
-              <div className={style.item}>
-                <div>
-                  <strong>Termos e privacidade</strong>
-                  <p>Termos de serviço e política de privacidade</p>
-                </div>
-                <span className={style.seta}>&gt;</span>
-              </div>
-              <div className={`${style.item} ${style.itemClicavel}`}>
-                <strong className={style.sair}>Sair</strong>
-              </div>
+
+              <button className={style.botaoSair} onClick={handleLogout}>
+                <FiLogOut size={18} /> Sair
+              </button>
             </section>
-
           </main>
-
         </div>
-         
+        </div>
       </div>
+
+
       <Footer />
     </>
   );

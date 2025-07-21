@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./ItemDetalhes.module.css";
 import { useParams, useNavigate } from "react-router-dom";
 import EcoTrocaMenu from "../../components/EcoTrocaMenu";
-import Footer from '../../components/footer';
+import Footer from '../../components/Footer';
 
 
 import bicicletaImg from '../../assets/imagensdaHome/bicicletademontanha.jpg';

@@ -3,7 +3,8 @@ import MensagemCard from '../../components/MensagemCard';
 import style from './Mensagens.module.css';
 import EcoTrocaMenu from '../../components/EcoTrocaMenu';
 import AvatarMensagem from '../../assets/AvatarMensagem/avatar.png';
-import Footer from '../../components/footer';
+import Footer from '../../components/Footer';
+
 
 const mensagensFake = [
   {

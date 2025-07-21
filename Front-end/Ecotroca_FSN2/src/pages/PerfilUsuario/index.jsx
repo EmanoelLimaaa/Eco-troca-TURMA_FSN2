@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import style from "./PerfilUsuario.module.css";
 import EcoTrocaMenu from "../../components/EcoTrocaMenu";
-import Footer from '../../components/footer';
+import Footer from '../../components/Footer';
 
 function PerfilUsuario() {
   const [editMode, setEditMode] = useState(false);
