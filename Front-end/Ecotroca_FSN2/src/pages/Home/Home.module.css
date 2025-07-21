@@ -2,9 +2,7 @@
   min-height: 100vh;
   background: #fff;
   font-family: Arial, sans-serif;
-  overflow-x: hidden; 
-  width: 100%;
-  padding-top: 80px;
+  padding-top: 65px;
 }
 
 .filtersContainer {
