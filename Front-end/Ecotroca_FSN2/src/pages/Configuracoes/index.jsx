@@ -34,12 +34,12 @@ function Configuracoes() {
     <>
       <EcoTrocaMenu variant="configuracoes" />
       <div className={style.pagina}>
-      <div className={style.container} style={{ paddingTop: '65px' }}>
-        <h1 className={style.titulo}>Configurações</h1>
+        <div className={style.container} style={{ paddingTop: '65px' }}>
+          <h1 className={style.titulo}>Configurações</h1>
 
-        <div className={style.grid}>
+          <div className={style.grid}>
 
-          <main className={style.colunaEsquerda}>
+            <main className={style.colunaEsquerda}>
 
             {/* Geral */}
             <section className={style.secao}>
@@ -58,15 +58,18 @@ function Configuracoes() {
                 </div>
               </div>
 
-              <div className={style.item} onClick={alternarTema}>
-
-                <div>
-                  <strong>Tema</strong>
-                  <p>Altere o tema do aplicativo</p>
-                </div>
-                <div className={style.valorItem}>
-
-                  <span>{temaEscuro ? "Escuro" : "Claro"}</span>
+                <div className={style.item} onClick={alternarTema}>
+  
+                  <div>
+                    <strong>Tema</strong>
+                    <p>Altere o tema do aplicativo</p>
+                  </div>
+                  <div className={style.valorItem}>
+  
+                        <span>{temaEscuro ? "Escuro" : "Claro"}</span>
+                      </div>
+                    </div>
+              </section>
 
 
 
@@ -152,11 +155,10 @@ function Configuracoes() {
                 <FiLogOut size={18} /> Sair
               </button>
             </section>
-          </main>
-        </div>
+            </main>
+          </div>
         </div>
       </div>
-
 
       <Footer />
     </>
