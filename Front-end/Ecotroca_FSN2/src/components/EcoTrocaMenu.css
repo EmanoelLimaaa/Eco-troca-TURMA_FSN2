@@ -6,7 +6,6 @@
   background-color: #ffffff;
   border-bottom: 1px solid #e2e8f0;
   z-index: 1000;
-  box-sizing: border-box;
   font-family: system-ui, sans-serif;
 }
 
@@ -53,7 +52,8 @@
   transition: color 0.2s ease-in-out;
 }
 
-.menu-center a:hover {
+.menu-center a:hover,
+.menu-center a.active {
   color: #1a202c;
 }
 
@@ -71,7 +71,7 @@
   color: white;
 }
 .button-green:hover {
-  background-color: #59ce3b;
+  background-color: #4ab82e;
 }
 
 .button-gray {
@@ -106,8 +106,8 @@
 input[type="text"],
 input[type="search"],
 select {
-  background-color: #fff; 
-  color: #222;           
+  background-color: #fff;
+  color: #222;
   border: 1px solid #cbd5e0;
   border-radius: 8px;
   padding: 0.5rem;
@@ -161,29 +161,20 @@ input[type="search"]::placeholder {
     padding: 1rem 2rem;
   }
 
-  .mobile-menu .menu-center,
-  .mobile-menu .menu-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-  }
-
-  .menu-center a,
-  .menu-right button,
-  .menu-right a {
+  .mobile-menu a,
+  .mobile-menu button {
     padding: 0.5rem 0;
     width: 100%;
     text-align: left;
   }
 
-  .search-bar {
+  .mobile-menu .search-bar {
     width: 100%;
     box-sizing: border-box;
     margin: 0.5rem 0;
   }
 
-  .button {
+  .mobile-menu .button {
     width: 100%;
     text-align: center;
     margin: 0.5rem 0;
