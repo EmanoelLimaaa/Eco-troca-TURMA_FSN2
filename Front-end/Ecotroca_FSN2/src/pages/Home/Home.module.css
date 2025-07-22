@@ -9,7 +9,10 @@
   background-image: url('../../assets/imagensdaHome/banner.png');
   background-size: cover;
   background-position: center;
-  height: 300px;
+  height: 400px;
+  max-width: 1200px;
+  margin: 0 auto 20px auto;
+  padding: 0 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,7 +44,7 @@
 
 @media (max-width: 576px) {
   .banner {
-    height: 200px;
+    height: 300px;
   }
   .bannerText p {
     font-size: 1rem;
