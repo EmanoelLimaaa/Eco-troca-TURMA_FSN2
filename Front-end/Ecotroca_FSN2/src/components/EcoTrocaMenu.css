@@ -180,3 +180,32 @@ input[type="search"]::placeholder {
     margin: 0.5rem 0;
   }
 }
+
+.notification-container {
+  position: relative;
+  display: inline-flex;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  z-index: 1001;
+  padding: 10px;
+}
+
+.notification-item {
+  padding: 8px;
+  font-size: 0.9rem;
+  color: #4a5568;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}

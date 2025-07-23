@@ -28,7 +28,7 @@ const menuConfig = {
   loggedOut: [
     { label: 'Início', path: '/' },
     { label: 'Categorias', path: '/' },
-    { label: 'Pulicar Item', path: '/publicar', type: 'button-green' },
+    { label: 'Publicar Item', path: '/publicar', type: 'button-green' },
     { label: 'Login', path: '/login', type: 'button-gray' },
     { label: 'Cadastro', path: '/CadUsuario', type: 'button-gray' },
   ],
@@ -38,10 +38,9 @@ const menuConfig = {
     { label: 'Meus Itens', path: '/meuperfil' },
     { label: 'Mensagens', path: '/mensagens' },
     { label: 'Minhas Trocas', path: '/meuperfil' },
-    { label: 'Aceitar Oferta', path: '/propostas/:id' },
     { label: 'Configurações', path: '/configuracoes' },
     { label: 'Pesquisar', type: 'search', showIn: ['item-detalhes', 'perfil-usuario'] },
-    { label: 'Notificações', action: () => alert('Notificações'), type: 'icon-button' },
+    { label: 'Notificações', type: 'icon-button', icon: <NotificationIcon /> },
     { label: 'Meu Perfil', path: '/meuperfil', type: 'icon-button', icon: <ProfileIcon /> },
   ],
 };
@@ -50,8 +49,16 @@ const EcoTrocaMenu = ({ activePage }) => {
   const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
   const menuItems = isLoggedIn ? menuConfig.loggedIn : menuConfig.loggedOut;
+
+  // notificações ficticias pra depois substituir por reais quando tiver o back, se a gente for ter. Se não, deixa assim mesmo
+  const notifications = [
+    { id: 1, message: 'Nova oferta na sua bicicleta!' },
+    { id: 2, message: 'Mensagem de João sobre troca.' },
+    { id: 3, message: 'Item publicado com sucesso!' },
+  ];
 
   const renderMenuItem = (item) => {
     if (item.showIn && !item.showIn.includes(activePage)) {
@@ -72,12 +79,36 @@ const EcoTrocaMenu = ({ activePage }) => {
         </button>
       );
     } else if (item.type === 'icon-button') {
+      if (item.label === 'Notificações') {
+        return (
+          <div key={item.label} className="notification-container">
+            <button
+              className="icon-button"
+              onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+            >
+              {item.icon}
+            </button>
+            {isNotificationsOpen && (
+              <div className="notification-dropdown">
+                {notifications.length > 0 ? (
+                  notifications.map((notif) => (
+                    <div key={notif.id} className="notification-item">
+                      {notif.message}
+                    </div>
+                  ))
+                ) : (
+                  <div className="notification-item">Nenhuma notificação</div>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      }
       return (
         <button
           key={item.label}
           className="icon-button"
           onClick={() => {
-            if (item.action) item.action();
             if (item.path) navigate(item.path);
             setIsMenuOpen(false);
           }}
