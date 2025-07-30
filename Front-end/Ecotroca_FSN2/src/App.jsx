@@ -11,6 +11,7 @@ import TelaProposta from './pages/TelaPropostas';
 import Configuracoes from './pages/Configuracoes';
 import PerfilUsuario from './pages/PerfilUsuario';
 import Mensagens from './pages/Mensagens';
+import DetalhesConfiguracao from './pages/DetalhesConfiguracao';
 
 function AppWithMenu() {
   const location = useLocation();
@@ -30,6 +31,7 @@ function AppWithMenu() {
         <Route path="/configuracoes" element={<Configuracoes />} />
         <Route path="/perfilusuario" element={<PerfilUsuario />} />
         <Route path="/mensagens" element={<Mensagens />} />
+        <Route path="/configuracoes/detalhes" element={<DetalhesConfiguracao />} />
       </Routes>
     </>
   );
