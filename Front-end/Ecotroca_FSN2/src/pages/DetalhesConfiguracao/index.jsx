@@ -93,7 +93,7 @@ function DetalhesConfiguracao() {
 
           {/* SOBRE */}
           <section className={style.card}>
-            <h3>ℹ️ Saiba Mais Sobre Nosso Site</h3>
+            <h3>ℹ️ Saiba mais sobre o nosso site</h3>
             <p>Informações sobre a EcoTroca e nossa missão</p>
 
             <div className={style.infoCard}>
