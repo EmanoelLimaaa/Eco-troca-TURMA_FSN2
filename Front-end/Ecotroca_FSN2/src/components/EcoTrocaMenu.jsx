@@ -26,19 +26,16 @@ const HamburgerIcon = () => (
 // a configuração do menu
 const menuConfig = {
   loggedOut: [
-    { label: 'Início', path: '/' },
-    { label: 'Categorias', path: '/' },
+    { label: 'Início', path: '/', type: 'button-gray' },
     { label: 'Publicar Item', path: '/publicar', type: 'button-green' },
     { label: 'Login', path: '/login', type: 'button-gray' },
     { label: 'Cadastro', path: '/CadUsuario', type: 'button-gray' },
   ],
   loggedIn: [
-    { label: 'Início', path: '/' },
-    { label: 'Categorias', path: '/' },
-    { label: 'Meus Itens', path: '/meuperfil' },
-    { label: 'Mensagens', path: '/mensagens' },
-    { label: 'Minhas Trocas', path: '/meuperfil' },
-    { label: 'Configurações', path: '/configuracoes' },
+    { label: 'Início', path: '/', type: 'button-gray' },
+    { label: 'Meus Itens', path: '/meuperfil', type: 'button-gray' },
+    { label: 'Mensagens', path: '/mensagens', type: 'button-gray' },
+    { label: 'Configurações', path: '/configuracoes', type: 'button-gray' },
     { label: 'Pesquisar', type: 'search', showIn: ['item-detalhes', 'perfil-usuario'] },
     { label: 'Notificações', type: 'icon-button', icon: <NotificationIcon /> },
     { label: 'Meu Perfil', path: '/meuperfil', type: 'icon-button', icon: <ProfileIcon /> },
@@ -69,7 +66,7 @@ const EcoTrocaMenu = ({ activePage }) => {
       return (
         <button
           key={item.label}
-          className={`button ${item.type}`}
+          className={`button ${item.type} ${item.path === activePage ? 'active' : ''}`}
           onClick={() => {
             navigate(item.path);
             setIsMenuOpen(false);
@@ -142,15 +139,8 @@ const EcoTrocaMenu = ({ activePage }) => {
         <button className="hamburger-button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <HamburgerIcon />
         </button>
-        <nav className="menu-center desktop-only">
-          {menuItems
-            .filter((item) => !item.type || item.type === 'search')
-            .map(renderMenuItem)}
-        </nav>
         <div className="menu-right desktop-only">
-          {menuItems
-            .filter((item) => item.type && item.type !== 'search')
-            .map(renderMenuItem)}
+          {menuItems.map(renderMenuItem)}
         </div>
       </div>
       <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
