@@ -53,18 +53,23 @@ O **Eco-Troca** é uma plataforma intuitiva que transforma pequenas ações em i
     cd Eco-troca-TURMA_FSN2
     ```
 
-2. **Instale as dependências**
+2. **Configurar o Front-end**
+   ```
+   cd Front-end/Ecotroca_FSN2
+   ```
+
+3. **Instale as dependências**
     ```
     npm install
     ```
 
 
-3. **Execute a aplicação**
+4. **Execute a aplicação**
     ```
     npm run dev
     ```
 
-4. **Acesse no navegador:**  
+5. **Acesse no navegador:**  
     [http://localhost:5173/](http://localhost:5173/)
 
 ---
