@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // ou "mysql", ajuste conforme o banco que vamos usar
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id            Int       @id @default(autoincrement())
+  nome          String
+  email         String    @unique
+  senha         String
+  cidade        String
+  estado        String
+  imagem_perfil String?   // opcional
+  bio           String?   // opcional
+  tipo_usuario  String    // comum ou admin
+
+  itens         Item[]    @relation("UsuarioItems")
+  propostas_enviadas  Proposta[] @relation("PropostasEnviadas")
+  propostas_recebidas Proposta[] @relation("PropostasRecebidas")
+}
+
+model Item {
+  id           Int       @id @default(autoincrement())
+  titulo       String
+  descricao    String
+  imagem       String?   // opcional
+  estado_item  String
+  disponivel   Boolean   @default(true)
+  usuario_id   Int
+  categoria_id Int
+
+  usuario      Usuario   @relation("UsuarioItems", fields: [usuario_id], references: [id])
+  categoria    Categoria @relation(fields: [categoria_id], references: [id])
+
+  propostas_ofertado Proposta[] @relation("Ofertado")
+  propostas_desejado Proposta[] @relation("Desejado")
+}
+
+model Categoria {
+  id    Int    @id @default(autoincrement())
+  nome  String
+
+  itens Item[]
+}
+
+model Proposta {
+  id              Int       @id @default(autoincrement())
+  item_ofertado_id Int
+  item_desejado_id Int
+  ofertante_id    Int
+  receptor_id     Int
+  mensagem        String?   // opcional
+  status          String    // pendente, aceita, recusada
+  data_criacao    DateTime  @default(now())
+
+  item_ofertado  Item     @relation("Ofertado", fields: [item_ofertado_id], references: [id])
+  item_desejado  Item     @relation("Desejado", fields: [item_desejado_id], references: [id])
+  ofertante     Usuario   @relation("PropostasEnviadas", fields: [ofertante_id], references: [id])
+  receptor      Usuario   @relation("PropostasRecebidas", fields: [receptor_id], references: [id])
+}
