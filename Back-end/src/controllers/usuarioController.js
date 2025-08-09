@@ -25,3 +25,8 @@ export const criarUsuario = async (req, res) => {
     res.status(500).json({ error: 'Erro no servidor' });
   }
 };
+
+export const teste = (req, res) => {
+  res.json({ msg: "API funcionando :)" });
+};
+
