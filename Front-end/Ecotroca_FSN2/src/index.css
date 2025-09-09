@@ -1,68 +1,108 @@
+/* =========================
+   VARIÁVEIS GLOBAIS
+========================= */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* Tipografia */
+  --fonte-base: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --peso-normal: 400;
+  --peso-destaque: 600;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Espaçamento padrão */
+  --espaco-sm: 0.5rem;
+  --espaco-md: 1rem;
+  --espaco-lg: 2rem;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Cores - Tema Claro */
+  --cor-fundo: #ffffff;
+  --cor-texto: #222222;
+  --cor-subtexto: #666666;
+  --cor-card: #f9f9f9;
+  --cor-titulo: #111111;
+  --cor-primaria: #54D12B;
+  --cor-secundaria: #646cff;
+  --cor-borda: #dddddd;
 }
 
+/* Tema Escuro */
+body.dark-theme {
+  --cor-fundo: #121212;
+  --cor-texto: #f5f5f5;
+  --cor-subtexto: #aaaaaa;
+  --cor-card: #1f1f1f;
+  --cor-titulo: #ffffff;
+  --cor-borda: #333333;
+}
+
+/* =========================
+   RESET BÁSICO
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100%;
+  font-family: var(--fonte-base);
+  font-weight: var(--peso-normal);
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* =========================
+   LINKS
+========================= */
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  font-weight: var(--peso-destaque);
+  color: var(--cor-secundaria);
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 a:hover {
   color: #535bf2;
 }
 
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
+/* =========================
+   BOTÕES
+========================= */
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid var(--cor-borda);
   padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: var(--peso-destaque);
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--cor-primaria);
+  color: #fff;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 button:hover {
-  border-color: #646cff;
+  background-color: #45a623;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+button:active {
+  transform: scale(0.98);
+}
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* =========================
+   CONTAINERS GLOBAIS
+========================= */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--espaco-md);
+}
+
+.card {
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  padding: var(--espaco-md);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
