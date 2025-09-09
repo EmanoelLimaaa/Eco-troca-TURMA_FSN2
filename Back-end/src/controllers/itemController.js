@@ -30,14 +30,28 @@ export const criarItem = async (req, res) => {
 export const listarItens = async (req, res) => {
   const { categoriaId } = req.query;
   try {
-    const filtros = {};
-    if (categoriaId) filtros.categoria_id = Number(categoriaId);
-
-    const itens = await prisma.item.findMany({ where: filtros });
+    console.log('Buscando itens com filtros:', { categoriaId });
+    
+    const itens = await prisma.item.findMany({
+      where: categoriaId ? { categoria_id: Number(categoriaId) } : {},
+      include: {
+        categoria: {
+          select: { nome: true }
+        },
+        usuario: {
+          select: { nome: true, cidade: true, estado: true }
+        }
+      }
+    });
+    
+    console.log('Itens encontrados:', itens.length);
     res.json(itens);
   } catch (error) {
     console.error('Erro ao listar itens:', error);
-    res.status(500).json({ error: 'Erro ao listar itens' });
+    res.status(500).json({ 
+      error: 'Erro ao listar itens',
+      details: error.message 
+    });
   }
 };
 
