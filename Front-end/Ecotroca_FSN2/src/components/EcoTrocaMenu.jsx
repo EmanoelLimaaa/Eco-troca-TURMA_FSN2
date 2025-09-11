@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import './EcoTrocaMenu.css';
@@ -43,10 +43,15 @@ const menuConfig = {
 };
 
 const EcoTrocaMenu = ({ activePage }) => {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, logout, loading } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  
+  // Fecha o menu quando o estado de autenticação mudar
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [isLoggedIn]);
 
   const menuItems = isLoggedIn ? menuConfig.loggedIn : menuConfig.loggedOut;
 
@@ -145,6 +150,22 @@ const EcoTrocaMenu = ({ activePage }) => {
       </div>
       <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
         {menuItems.map(renderMenuItem)}
+        {isLoggedIn && (
+          <button
+            className="button button-gray"
+            onClick={async () => {
+              try {
+                await logout();
+                setIsMenuOpen(false);
+                navigate('/login');
+              } catch (error) {
+                console.error('Erro ao fazer logout:', error);
+              }
+            }}
+          >
+            Sair
+          </button>
+        )}
       </div>
     </header>
   );

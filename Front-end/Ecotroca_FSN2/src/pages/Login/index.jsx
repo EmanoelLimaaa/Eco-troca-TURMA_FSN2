@@ -1,26 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styles from "./Login.module.css";
-import { useNavigate, Link } from 'react-router-dom';
-import imgFundo from '../../assets/imgLogin/troca.webp'; // ajuste conforme necessário
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../components/AuthContext';
+import imgFundo from '../../assets/imgLogin/troca.webp';
 
 function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
-  const navigate = useNavigate();
+  const { login, isLoggedIn } = useContext(AuthContext);
+  
+  useEffect(() => {
+    if (isLoggedIn) {
+      window.location.href = '/';
+    }
+  }, [isLoggedIn]);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setErro("");
 
-    if (email === "" || senha === "") {
+    if (!email || !senha) {
       setErro("Preencha todos os campos.");
       return;
     }
 
-    if (email === "usuario@ecotroca.com" && senha === "123456") {
-      alert("Login realizado com sucesso!");
-      navigate('/');     
-    } else {
+    try {
+      await login(email, senha);
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
       setErro("E-mail ou senha incorretos.");
     }
   };

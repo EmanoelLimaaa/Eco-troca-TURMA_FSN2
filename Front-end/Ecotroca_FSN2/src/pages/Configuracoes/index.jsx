@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import style from './Configuracoes.module.css';
 import EcoTrocaMenu from '../../components/EcoTrocaMenu';
 import { FiLogOut } from 'react-icons/fi';
 import Footer from '../../components/Footer';
-
+import { AuthContext } from '../../components/AuthContext';
 
 function Configuracoes() {
   const [idioma, setIdioma] = useState("Português");
@@ -25,9 +25,15 @@ function Configuracoes() {
     setTemaEscuro((temaAtual) => !temaAtual);
   };
 
-  const handleLogout = () => {
-    alert("Você saiu do aplicativo.");
-    navigate('/login');
+  const { logout } = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error);
+    }
   };
 
   return (
