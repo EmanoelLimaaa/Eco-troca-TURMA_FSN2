@@ -6,7 +6,6 @@ export const useAuth = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Verifica se o usuário está autenticado ao carregar o hook
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -27,19 +26,28 @@ export const useAuth = () => {
     checkAuth();
   }, []);
 
-  // Função de login
   const login = useCallback(async (email, password) => {
     try {
       setLoading(true);
       setError(null);
+      
+      setUser(null);
+      
       const { token, refreshToken, user: userData } = await loginService(email, password);
       
       localStorage.setItem('token', token);
       localStorage.setItem('refreshToken', refreshToken);
       
-      setUser(userData);
-      return userData;
+      const currentUser = await getCurrentUser();
+      
+      setUser(currentUser);
+      
+      return currentUser;
     } catch (error) {
+      console.error('Erro no login:', error);
+      setUser(null);
+      localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
       setError(error.message || 'Erro ao fazer login');
       throw error;
     } finally {
@@ -47,7 +55,6 @@ export const useAuth = () => {
     }
   }, []);
 
-  // Função de registro
   const register = useCallback(async (userData) => {
     try {
       setLoading(true);
@@ -62,7 +69,6 @@ export const useAuth = () => {
     }
   }, []);
 
-  // Função de logout
   const logout = useCallback(async () => {
     try {
       await logoutService();
