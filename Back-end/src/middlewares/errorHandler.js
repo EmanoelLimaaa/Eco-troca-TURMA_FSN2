@@ -6,6 +6,6 @@ export function errorHandler(err, req, res, next) {
   }
 
   res.status(err.status || 500).json({
-    error: err.message || "Algo deu errado no servidor!",
+    error: err.message || "Ops! Tivemos um problema ao processar sua solicitação. Tente novamente em alguns minutos.",
   });
 }

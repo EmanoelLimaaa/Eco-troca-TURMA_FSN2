@@ -14,13 +14,13 @@ const login = async (req, res) => {
     });
 
     if (!usuario) {
-      return res.status(401).json({ error: 'Credenciais inválidas' });
+      return res.status(401).json({ error: 'E-mail ou senha incorretos. Por favor, verifique os dados e tente novamente.'});
     }
 
     // Verifica a senha
     const senhaValida = await bcrypt.compare(senha, usuario.senha);
     if (!senhaValida) {
-      return res.status(401).json({ error: 'Credenciais inválidas' });
+      return res.status(401).json({ error: 'E-mail ou senha incorretos. Por favor, verifique os dados e tente novamente.' });
     }
 
     // Gera o token JWT
@@ -29,13 +29,14 @@ const login = async (req, res) => {
     // Retorna o token e informações do usuário (sem a senha)
     const { senha: _, ...usuarioSemSenha } = usuario;
     return res.json({
+      message:'Login realizado com sucesso!',
       usuario: usuarioSemSenha,
       token
     });
 
   } catch (error) {
     console.error('Erro no login:', error);
-    return res.status(500).json({ error: 'Erro interno do servidor' });
+    return res.status(500).json({ error: 'Ops! Tivemos um problema ao fazer login. Tente novamente em alguns minutos.'});
   }
 };
 
@@ -57,13 +58,13 @@ const getMe = async (req, res) => {
     });
 
     if (!usuario) {
-      return res.status(404).json({ error: 'Usuário não encontrado' });
+      return res.status(404).json({ error:'Usuário não encontrado. Verifique se está autenticado corretamente.'});
     }
 
     return res.json(usuario);
   } catch (error) {
     console.error('Erro ao buscar usuário:', error);
-    return res.status(500).json({ error: 'Erro interno do servidor' });
+    return res.status(500).json({ error: 'Ops! Não foi possível carregar os dados do usuário. Tente novamente em alguns minutos.' });
   }
 };
 
