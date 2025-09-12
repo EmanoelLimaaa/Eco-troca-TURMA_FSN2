@@ -21,11 +21,12 @@ app.use("/usuarios", usuarioRoutes);
 app.use("/categorias", categoriaRoutes);
 app.use("/propostas", propostaRoutes);
 app.use("/itens", itemRoutes);
+app.use("/auth", authRoutes);
 
 
 app.use(errorHandler);
 
-app.use("/auth", authRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
