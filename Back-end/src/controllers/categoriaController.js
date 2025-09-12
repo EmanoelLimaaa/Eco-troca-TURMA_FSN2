@@ -16,7 +16,7 @@ export const criarCategoria = async (req, res) => {
     });
     res.status(201).json(categoria);
   } catch (error) {
-    res.status(500).json({ error: "Erro ao criar categoria" });
+    res.status(500).json({ error: "Erro ao criar categoriaa" });
   }
 };
 
