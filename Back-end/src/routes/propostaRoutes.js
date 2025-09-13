@@ -1,9 +1,18 @@
-import express from 'express';
-import { criarProposta, listarPropostasPorUsuario } from '../controllers/propostaController.js';
+import { Router } from "express";
 
-const router = express.Router();
+const router = Router();
 
-router.post('/', criarProposta);
-router.get('/', listarPropostasPorUsuario);
+// rota para criar proposta
+router.post("/", (req, res) => {
+  const { nome, item, data, telefone, descricao } = req.body;
+
+  // simulação de salvar no banco
+  console.log("📩 Proposta recebida:", req.body);
+
+  res.status(201).json({
+    msg: "Proposta enviada com sucesso!",
+    proposta: { nome, item, data, telefone, descricao }
+  });
+});
 
 export default router;
