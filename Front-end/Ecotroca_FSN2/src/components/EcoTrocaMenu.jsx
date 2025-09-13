@@ -27,12 +27,12 @@ const HamburgerIcon = () => (
 const menuConfig = {
   loggedOut: [
     { label: 'Início', path: '/', type: 'button-gray' },
-    { label: 'Publicar Item', path: '/publicar', type: 'button-green' },
     { label: 'Login', path: '/login', type: 'button-gray' },
     { label: 'Cadastro', path: '/CadUsuario', type: 'button-gray' },
   ],
   loggedIn: [
     { label: 'Início', path: '/', type: 'button-gray' },
+    { label: 'Publicar Item', path: '/publicar', type: 'button-green' },
     { label: 'Meus Itens', path: '/meuperfil', type: 'button-gray' },
     { label: 'Mensagens', path: '/mensagens', type: 'button-gray' },
     { label: 'Configurações', path: '/configuracoes', type: 'button-gray' },
