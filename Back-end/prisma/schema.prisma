@@ -14,9 +14,11 @@ model Usuario {
   senha         String
   cidade        String
   estado        String
+  idade         Int?      // opcional
+  sexo          String?   // opcional
   imagem_perfil String?   // opcional
   bio           String?   // opcional
-  tipo_usuario  String    // comum ou admin
+  tipo_usuario  String    @default("comum") // comum ou admin
 
   itens         Item[]    @relation("UsuarioItems")
   propostas_enviadas  Proposta[] @relation("PropostasEnviadas")
