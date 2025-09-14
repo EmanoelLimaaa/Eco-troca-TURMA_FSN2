@@ -14,8 +14,18 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(validateMiddleware);
+// Configuração para servir arquivos estáticos
+app.use('/uploads', express.static('uploads'));
+
+// Aplica o validateMiddleware apenas para rotas que não são de upload
+app.use((req, res, next) => {
+  if (!req.path.startsWith('/usuarios') || req.method === 'GET') {
+    return validateMiddleware(req, res, next);
+  }
+  next();
+});
 
 app.use("/usuarios", usuarioRoutes);
 app.use("/categorias", categoriaRoutes);

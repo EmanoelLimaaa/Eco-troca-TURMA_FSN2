@@ -10,6 +10,7 @@ function Cadastro() {
     sexo: '',
     email: '',
     cidade: '',
+    estado: '',
     senha: '',
     foto: null,
   });
@@ -19,9 +20,55 @@ function Cadastro() {
     setForm({ ...form, [name]: name === 'foto' ? files[0] : value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Dados cadastrados:', form);
+    
+    const formData = new FormData();
+    formData.append('nome', form.nome);
+    formData.append('email', form.email);
+    formData.append('senha', form.senha);
+    formData.append('cidade', form.cidade);
+    formData.append('estado', form.estado);
+    formData.append('tipo_usuario', 'comum');
+    formData.append('idade', form.idade);
+    formData.append('sexo', form.sexo);
+    
+    if (form.foto) {
+      formData.append('foto', form.foto);
+    }
+
+    try {
+      console.log('Enviando dados do formulário:', Object.fromEntries(formData));
+      
+      const response = await fetch('http://localhost:3000/usuarios', {
+        method: 'POST',
+        body: formData,
+      });
+
+      console.log('Status da resposta:', response.status);
+      
+      let responseData;
+      try {
+        responseData = await response.json();
+        console.log('Resposta do servidor:', responseData);
+      } catch (jsonError) {
+        console.error('Erro ao processar resposta JSON:', jsonError);
+        const textResponse = await response.text();
+        console.error('Resposta em texto:', textResponse);
+        throw new Error('Resposta do servidor não é um JSON válido');
+      }
+      
+      if (response.ok) {
+        alert('Cadastro realizado com sucesso!');
+        window.location.href = '/login';
+      } else {
+        console.error('Erro na resposta:', responseData);
+        alert(responseData.error || `Erro ao cadastrar usuário: ${response.status} ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Erro ao cadastrar:', error);
+      alert('Erro ao conectar com o servidor. Tente novamente mais tarde.');
+    }
   };
 
   return (
@@ -60,6 +107,11 @@ function Cadastro() {
         <div className={styles.inputGroup}>
           <FontAwesomeIcon icon={faCity} className={styles.icon} />
           <input type="text" name="cidade" placeholder="Cidade" value={form.cidade} onChange={handleChange} required />
+        </div>
+
+        <div className={styles.inputGroup}>
+          <FontAwesomeIcon icon={faCity} className={styles.icon} />
+          <input type="text" name="estado" placeholder="Estado (UF)" value={form.estado} onChange={handleChange} maxLength="2" required />
         </div>
 
         <div className={styles.inputGroup}>
