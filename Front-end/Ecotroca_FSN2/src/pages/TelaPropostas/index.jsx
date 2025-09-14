@@ -20,35 +20,35 @@ function TelaPropostas() {
     });
   };
 
-    const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-    const formData = new FormData();
-    formData.append("nome", form.nome);
-    formData.append("item", form.item);
-    formData.append("data", form.data);
-    formData.append("telefone", form.telefone);
-    formData.append("descricao", form.descricao);
+    try {
+      const formData = new FormData();
+      formData.append("nome", form.nome);
+      formData.append("item", form.item);
+      formData.append("data", form.data);
+      formData.append("telefone", form.telefone);
+      formData.append("descricao", form.descricao);
 
-    if (form.imagem) {
-      formData.append("imagem", form.imagem); // upload do arquivo
+      if (form.imagem) {
+        formData.append("imagem", form.imagem);
+      }
+
+      const response = await fetch("http://localhost:3000/propostas", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      alert(result.msg);
+      console.log(result);
+
+    } catch (error) {
+      console.error("Erro ao enviar proposta:", error);
+      alert("Erro ao enviar proposta.");
     }
-
-    const response = await fetch("http://localhost:3000/propostas", {
-      method: "POST",
-      body: formData, // importante: não usar JSON quando tem arquivos
-    });
-
-    const result = await response.json();
-    alert(result.msg);
-    console.log(result);
-
-  } catch (error) {
-    console.error("Erro ao enviar proposta:", error);
-    alert("Erro ao enviar proposta.");
-  }
-};
+  };
 
 
   return (
@@ -58,7 +58,6 @@ function TelaPropostas() {
         <div className={styles.container}>
           <h1 className={styles.title}>Criar Proposta de Troca</h1>
 
-          {/* Formulário */}
           <form className={styles.form} onSubmit={handleSubmit}>
             <input
               type="text"
@@ -111,30 +110,11 @@ function TelaPropostas() {
               className={styles.textarea}
             />
 
-            {/* Botão de enviar */}
             <button type="submit" className={styles.submitButton}>
               Enviar Proposta
             </button>
           </form>
 
-          {/* Pré-visualização */}
-          <div className={styles.previewBox}>
-            <h2 className={styles.previewTitle}>Pré-visualização da proposta</h2>
-            <div className={styles.previewContent}>
-              <p><strong>Nome:</strong> {form.nome || "Seu nome aqui"}</p>
-              <p><strong>Item ofertado:</strong> {form.item || "Nome do item"}</p>
-              {form.imagem && (
-                <img
-                  src={URL.createObjectURL(form.imagem)}
-                  alt="Pré-visualização"
-                  className={styles.previewImage}
-                />
-              )}
-              <p><strong>Data:</strong> {form.data || "Não definida"}</p>
-              <p><strong>Telefone:</strong> {form.telefone || "Não informado"}</p>
-              <p><strong>Descrição:</strong> {form.descricao || "Escreva sua proposta..."}</p>
-            </div>
-          </div>
         </div>
       </div>
     </>

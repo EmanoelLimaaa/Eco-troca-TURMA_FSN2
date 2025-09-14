@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styles from "./Login.module.css";
 import { useNavigate, Link } from "react-router-dom";
 import imgFundo from "../../assets/imgLogin/troca.webp"; // ajuste conforme necessário
+import { AuthContext } from "../../components/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -11,22 +12,29 @@ function Login() {
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmaSenha, setConfirmaSenha] = useState("");
   const [step, setStep] = useState("login"); // controla a tela atual
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   // === LOGIN ===
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setErro("");
 
-    if (email === "" || senha === "") {
+    if (!email || !senha) {
       setErro("Preencha todos os campos.");
       return;
     }
 
-    if (email === "usuario@ecotroca.com" && senha === "123456") {
-      alert("Login realizado com sucesso!");
+    try {
+      setLoading(true);
+      await login(email, senha);
       navigate("/");
-    } else {
-      setErro("E-mail ou senha incorretos.");
+    } catch (error) {
+      console.error("Erro no login:", error);
+      setErro("E-mail ou senha incorretos. Tente novamente.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -116,8 +124,12 @@ function Login() {
             Esqueci minha senha
           </button>
 
-          <button type="submit" className={styles.button}>
-            Entrar
+          <button
+            type="submit"
+            className={styles.button}
+            disabled={loading}
+          >
+            {loading ? "Entrando..." : "Entrar"}
           </button>
         </form>
       )}
