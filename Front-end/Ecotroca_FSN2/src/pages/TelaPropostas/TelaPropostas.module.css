@@ -4,7 +4,7 @@
   align-items: flex-start;
   min-height: 100vh;
   background-color: #f7f7f7; 
-  padding: 20px;
+  padding: 80px 20px 20px 20px;
 }
 
 .container {
@@ -16,7 +16,6 @@
   width: 100%;
 }
 
-
 .title {
   font-size: 26px; 
   font-weight: 600; 
@@ -25,14 +24,12 @@
   text-align: center;
 }
 
-
 .form {
   display: flex;
   flex-direction: column;
   gap: 15px; 
   margin-bottom: 30px;
 }
-
 
 .input, .textarea {
   padding: 12px;
@@ -55,7 +52,6 @@
   min-height: 100px; 
 }
 
-
 .submitButton {
   background-color: #38a169; 
   color: #fff; 
@@ -71,7 +67,6 @@
 .submitButton:hover {
   background-color: #2f855a; 
 }
-
 
 .previewBox {
   border: 1px solid #e2e8f0; 
