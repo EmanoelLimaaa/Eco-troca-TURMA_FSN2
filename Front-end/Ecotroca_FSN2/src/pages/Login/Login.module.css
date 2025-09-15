@@ -121,3 +121,31 @@ body {
 
 
 
+.linkRecuperar {
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: #2b6cb0; 
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.linkRecuperar:hover {
+  color: #1a202c;
+}
+
+
+.linkRecuperar {
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: #2b6cb0; 
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.linkRecuperar:hover {
+  color: #1a202c; 
+}
