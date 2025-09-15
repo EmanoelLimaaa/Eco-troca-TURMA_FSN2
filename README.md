@@ -94,6 +94,25 @@ te
 4. **Negociar Trocas:** Use o chat ou envie através do botão para combinar uma troca.
 
 ---
+## 🧩 Middlewares
+
+O backend do Eco-Troca utiliza middlewares para **validar os dados das requisições** e **padronizar o tratamento de erros**.  
+Isso garante que o sistema seja mais seguro e que o front-end sempre receba respostas consistentes.
+
+---
+
+### 🔎 Validação (`validateMiddleware.js`)
+- Aplicado globalmente no `app.js`, antes das rotas.  
+- Garante que os dados recebidos nas requisições tenham formato válido.  
+- Retorna **400 - Bad Request** com mensagem amigável em caso de erro.  
+
+**Exemplo de resposta (erro de validação):**
+```json
+{
+  "error": "Dados inválidos ou incompletos. Verifique as informações enviadas."
+}
+
+---
 
 ## 🤝 Contribuição
 
