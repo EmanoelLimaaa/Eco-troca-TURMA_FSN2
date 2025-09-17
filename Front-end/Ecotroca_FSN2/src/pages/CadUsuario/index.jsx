@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faLock, faCity, faVenusMars, faCamera } from '@fortawesome/free-solid-svg-icons';
+import { cadastrarUsuario } from '../../services/usuarioService';
 import styles from './CadUsuario.module.css';
 
 function Cadastro() {
@@ -39,35 +40,14 @@ function Cadastro() {
 
     try {
       console.log('Enviando dados do formulário:', Object.fromEntries(formData));
-      
-      const response = await fetch('http://localhost:3000/usuarios', {
-        method: 'POST',
-        body: formData,
-      });
 
-      console.log('Status da resposta:', response.status);
-      
-      let responseData;
-      try {
-        responseData = await response.json();
-        console.log('Resposta do servidor:', responseData);
-      } catch (jsonError) {
-        console.error('Erro ao processar resposta JSON:', jsonError);
-        const textResponse = await response.text();
-        console.error('Resposta em texto:', textResponse);
-        throw new Error('Resposta do servidor não é um JSON válido');
-      }
-      
-      if (response.ok) {
-        alert('Cadastro realizado com sucesso!');
-        window.location.href = '/login';
-      } else {
-        console.error('Erro na resposta:', responseData);
-        alert(responseData.error || `Erro ao cadastrar usuário: ${response.status} ${response.statusText}`);
-      }
+      await cadastrarUsuario(formData);
+
+      alert('Cadastro realizado com sucesso!');
+      window.location.href = '/login';
     } catch (error) {
       console.error('Erro ao cadastrar:', error);
-      alert('Erro ao conectar com o servidor. Tente novamente mais tarde.');
+      alert(error.response?.data?.error || 'Erro ao conectar com o servidor. Tente novamente mais tarde.');
     }
   };
 

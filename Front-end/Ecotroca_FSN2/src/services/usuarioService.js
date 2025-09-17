@@ -1,5 +1,10 @@
 import api from './api';
 
+export const cadastrarUsuario = (formData) =>
+  api.post('/usuarios', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }).then(res => res.data);
+
 export const getPerfil = () => api.get('/usuarios/me').then(res => res.data);
 
 export const atualizarPerfil = (dadosUsuario) => 
