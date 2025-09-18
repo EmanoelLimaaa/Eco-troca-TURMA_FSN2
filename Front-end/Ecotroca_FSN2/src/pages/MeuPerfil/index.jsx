@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../components/AuthContext";
 import styles from "./MeuPerfil.module.css";
 
 function MeuPerfil() {
   const [abaAtiva, setAbaAtiva] = useState("itens");
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   const itens = [
     {
@@ -29,6 +31,8 @@ function MeuPerfil() {
     },
   ];
 
+
+
   const handleEditarPerfil = () => {
     navigate("/editar-perfil");
   };
@@ -36,8 +40,14 @@ function MeuPerfil() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.titulo}>Meu Perfil</h1>
-        
+        <div className={styles.userInfo}>
+          {user && user.imagem_perfil ? (
+            <img src={`${import.meta.env.VITE_API_URL}${user.imagem_perfil}`} alt="Foto do perfil" className={styles.profilePic} />
+          ) : (
+            <div className={styles.profilePic}></div>
+          )}
+          <h1 className={styles.titulo}>{user ? user.nome : 'Meu Perfil'}</h1>
+        </div>
       </header>
 
       <nav className={styles.abas}>

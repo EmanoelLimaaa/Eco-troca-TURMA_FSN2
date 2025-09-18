@@ -11,7 +11,13 @@ const NotificationIcon = () => (
   </svg>
 );
 
-const ProfileIcon = () => <div className="profile-circle"></div>;
+const ProfileIcon = () => {
+  const { user } = useContext(AuthContext);
+  if (user && user.imagem_perfil) {
+    return <img src={`${import.meta.env.VITE_API_URL}${user.imagem_perfil}`} alt="Perfil" className="profile-circle" />;
+  }
+  return <div className="profile-circle"></div>;
+};
 
 const SearchBar = () => <input type="search" placeholder="Pesquisar..." className="search-bar" />;
 

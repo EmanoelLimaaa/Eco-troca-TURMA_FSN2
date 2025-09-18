@@ -12,6 +12,27 @@
   margin-bottom: 2rem;
 }
 
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profilePic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #cbd5e0;
+  border: 2px solid #a0aec0;
+  overflow: hidden;
+}
+
+.profilePic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .titulo {
   font-size: 1.8rem;
   font-weight: 600;
