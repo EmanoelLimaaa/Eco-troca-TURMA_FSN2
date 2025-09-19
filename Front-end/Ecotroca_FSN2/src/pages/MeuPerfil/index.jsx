@@ -1,35 +1,32 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../components/AuthContext";
+import { getItems } from "../../services/itemService";
 import styles from "./MeuPerfil.module.css";
 
 function MeuPerfil() {
   const [abaAtiva, setAbaAtiva] = useState("itens");
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const [itens, setItens] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const itens = [
-    {
-      nome: "Livros",
-      descricao: "Livros usados",
-      imagem: "",
-    },
-    {
-      nome: "Roupas",
-      descricao: "Roupas usadas",
-      imagem: "",
-    },
-    {
-      nome: "Eletrônicos",
-      descricao: "Eletrônicos usados",
-      imagem: "",
-    },
-    {
-      nome: "Móveis",
-      descricao: "Móveis usados",
-      imagem: "",
-    },
-  ];
+  useEffect(() => {
+    if (user) {
+      const fetchUserItems = async () => {
+        setLoading(true);
+        try {
+          const items = await getItems({ usuarioId: user.id });
+          setItens(items);
+        } catch (error) {
+          console.error('Erro ao buscar itens do usuário:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchUserItems();
+    }
+  }, [user]);
 
 
 
@@ -72,13 +69,15 @@ function MeuPerfil() {
       </nav>
 
       <div className={styles.listaItens}>
-        {abaAtiva === "itens" &&
-          itens.map((item, i) => (
-            <div key={i} className={styles.item}>
+        {abaAtiva === "itens" && loading && <p>Carregando itens...</p>}
+        {abaAtiva === "itens" && !loading && itens.length === 0 && <p>Você ainda não publicou nenhum item.</p>}
+        {abaAtiva === "itens" && !loading &&
+          itens.map((item) => (
+            <div key={item.id} className={styles.item}>
               <div className={styles.itemInfo}>
-                <img src={item.imagem} alt={item.nome} />
+                <img src={item.imagem ? `http://localhost:3000/uploads/${item.imagem}` : null} alt={item.titulo} />
                 <div className={styles.itemTexto}>
-                  <strong>{item.nome}</strong>
+                  <strong>{item.titulo}</strong>
                   <span>{item.descricao}</span>
                 </div>
               </div>

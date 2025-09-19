@@ -1,76 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ItemDetalhes.module.css";
 import { useParams, useNavigate } from "react-router-dom";
 import EcoTrocaMenu from "../../components/EcoTrocaMenu";
 import Footer from '../../components/Footer';
-
-
-import bicicletaImg from '../../assets/imagensdaHome/bicicletademontanha.jpg';
-import livroImg from '../../assets/imagensdaHome/Livro-Senhordosaneis.jpg';
-import cameraImg from '../../assets/imagensdaHome/cameraDSLR.jpg';
-import mesaImg from '../../assets/imagensdaHome/mesadejantar.jpg';
-import sofaImg from '../../assets/imagensdaHome/sofa2lugares.jpg';
-import guitarraImg from '../../assets/imagensdaHome/guitarra-eletrica.jpg';
-
-const produtos = [
-  {
-    id: 1,
-    nome: "Bicicleta de montanha",
-    categoria: "Esportes",
-    cidade: "São Paulo",
-    descricao: "Bicicleta de montanha em excelente estado, usada poucas vezes.",
-    imagem: bicicletaImg
-  },
-  {
-    id: 2,
-    nome: "Livro O Senhor dos Anéis",
-    categoria: "Livros",
-    cidade: "Rio de Janeiro",
-    descricao: "Coleção completa do Senhor dos Anéis em ótimo estado.",
-    imagem: livroImg
-  },
-  {
-    id: 3,
-    nome: "Câmera DSLR",
-    categoria: "Eletrônicos",
-    cidade: "Belo Horizonte",
-    descricao: "Câmera DSLR Canon, lente 18-55mm, funciona perfeitamente.",
-    imagem: cameraImg
-  },
-  {
-    id: 4,
-    nome: "Mesa de jantar",
-    categoria: "Móveis",
-    cidade: "Curitiba",
-    descricao: "Mesa de jantar de madeira para 6 pessoas.",
-    imagem: mesaImg
-  },
-  {
-    id: 5,
-    nome: "Sofá de dois lugares",
-    categoria: "Móveis",
-    cidade: "Porto Alegre",
-    descricao: "Sofá confortável, tecido bege, pouco uso.",
-    imagem: sofaImg
-  },
-  {
-    id: 6,
-    nome: "Guitarra elétrica",
-    categoria: "Instrumentos Musicais",
-    cidade: "Salvador",
-    descricao: "Guitarra elétrica em ótimo estado, acompanha case.",
-    imagem: guitarraImg
-  },
-];
+import { getItemById } from '../../services/itemService';
 
 const DetalhesItem = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [produto, setProduto] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const produto = produtos.find(p => String(p.id) === id);
+  useEffect(() => {
+    const fetchItem = async () => {
+      setLoading(true);
+      setError('');
+      try {
+        const item = await getItemById(id);
+        setProduto(item);
+      } catch (err) {
+        console.error('Erro ao buscar item:', err);
+        setError('Item não encontrado.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (id) {
+      fetchItem();
+    }
+  }, [id]);
 
-  if (!produto) {
-    return <div className={styles.notFound}>Produto não encontrado.</div>;
+  if (loading) {
+    return <div className={styles.page}><p>Carregando...</p></div>;
+  }
+
+  if (error || !produto) {
+    return <div className={styles.notFound}>{error || 'Produto não encontrado.'}</div>;
   }
 
   return (
@@ -79,12 +45,12 @@ const DetalhesItem = () => {
       <EcoTrocaMenu variant="detalhesProduto" />
 
       <main className={styles.main}>
-        <img src={produto.imagem} alt={produto.nome} className={styles.productImage} />
-        <h1 className={styles.productTitle}>{produto.nome}</h1>
+        <img src={produto.imagem ? `http://localhost:3000/uploads/${produto.imagem}` : null} alt={produto.titulo} className={styles.productImage} />
+        <h1 className={styles.productTitle}>{produto.titulo}</h1>
         <div className={styles.productMeta}>
-          <span className={styles.productCategory}>{produto.categoria}</span>
+          <span className={styles.productCategory}>{produto.categoria?.nome}</span>
           <span className={styles.dot}>·</span>
-          <span className={styles.productLocation}>{produto.cidade}</span>
+          <span className={styles.productLocation}>{produto.usuario?.cidade}</span>
         </div>
         <p className={styles.productDescription}>{produto.descricao}</p>
         <div className={styles.actions}>
