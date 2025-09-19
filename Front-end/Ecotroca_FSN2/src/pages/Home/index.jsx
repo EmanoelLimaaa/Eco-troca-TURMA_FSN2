@@ -2,23 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EcoTrocaMenu from '../../components/EcoTrocaMenu';
 import Footer from '../../components/Footer';
-import bicicletaImg from '../../assets/imagensdaHome/bicicletademontanha.jpg';
-import livroImg from '../../assets/imagensdaHome/Livro-Senhordosaneis.jpg';
-import cameraImg from '../../assets/imagensdaHome/cameraDSLR.jpg';
-import mesaImg from '../../assets/imagensdaHome/mesadejantar.jpg';
-import sofaImg from '../../assets/imagensdaHome/sofa2lugares.jpg';
-import guitarraImg from '../../assets/imagensdaHome/guitarra-eletrica.jpg';
-import bannerImg from '../../assets/imagensdaHome/banner.png';
 import styles from './Home.module.css';
-
-const produtosOriginais = [
-  { id: 1, nome: 'Bicicleta de montanha', categoria: 'Esportes', cidade: 'São Paulo', imagem: bicicletaImg },
-  { id: 2, nome: 'Livro O Senhor dos Anéis', categoria: 'Livros', cidade: 'Rio de Janeiro', imagem: livroImg },
-  { id: 3, nome: 'Câmera DSLR', categoria: 'Eletrônicos', cidade: 'Belo Horizonte', imagem: cameraImg },
-  { id: 4, nome: 'Mesa de jantar', categoria: 'Móveis', cidade: 'Curitiba', imagem: mesaImg },
-  { id: 5, nome: 'Sofá de dois lugares', categoria: 'Móveis', cidade: 'Porto Alegre', imagem: sofaImg },
-  { id: 6, nome: 'Guitarra elétrica', categoria: 'Instrumentos Musicais', cidade: 'Salvador', imagem: guitarraImg },
-];
+import { getItems } from '../../services/itemService';
 
 const categorias = [
   'Categoria',
@@ -42,28 +27,45 @@ const cidades = [
 ];
 
 const Home = () => {
-  const [produtosFiltrados, setProdutosFiltrados] = useState(produtosOriginais);
+  const [produtos, setProdutos] = useState([]);
+  const [produtosFiltrados, setProdutosFiltrados] = useState([]);
   const [filtroCategoria, setFiltroCategoria] = useState('Categoria');
   const [filtroCidade, setFiltroCidade] = useState('Cidade/Bairro');
   const [busca, setBusca] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const filtrarProdutos = useCallback(() => {
-    let temp = produtosOriginais;
+    let temp = produtos;
 
     if (filtroCategoria !== 'Categoria') {
-      temp = temp.filter((p) => p.categoria === filtroCategoria);
+      temp = temp.filter((p) => p.categoria?.nome === filtroCategoria);
     }
     if (filtroCidade !== 'Cidade/Bairro') {
-      temp = temp.filter((p) => p.cidade === filtroCidade);
+      temp = temp.filter((p) => p.usuario?.cidade === filtroCidade);
     }
     if (busca.trim() !== '') {
       const termoBusca = busca.toLowerCase();
-      temp = temp.filter((p) => p.nome.toLowerCase().includes(termoBusca));
+      temp = temp.filter((p) => p.titulo.toLowerCase().includes(termoBusca));
     }
     setProdutosFiltrados(temp);
-  }, [filtroCategoria, filtroCidade, busca]);
+  }, [filtroCategoria, filtroCidade, busca, produtos]);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      setLoading(true);
+      try {
+        const items = await getItems();
+        setProdutos(items);
+      } catch (error) {
+        console.error('Erro ao buscar itens:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchItems();
+  }, []);
 
   useEffect(() => {
     filtrarProdutos();
@@ -107,15 +109,16 @@ const Home = () => {
         />
       </div>
       <div className={styles.productsGrid}>
-        {produtosFiltrados.length === 0 && (
+        {loading && <p>Carregando itens...</p>}
+        {!loading && produtosFiltrados.length === 0 && (
           <p className={styles['nenhum-produto']}>Nenhum produto encontrado.</p>
         )}
-        {produtosFiltrados.map((p) => (
+        {!loading && produtosFiltrados.map((p) => (
           <div className={styles['product-card']} key={p.id}>
-            <img src={p.imagem} alt={p.nome} className={styles['product-image']} />
-            <div className={styles['product-title']}>{p.nome}</div>
-            <div className={styles['product-category']}>{p.categoria}</div>
-            <div className={styles['product-location']}>{p.cidade}</div>
+            <img src={p.imagem ? `http://localhost:3000/uploads/${p.imagem}` : null} alt={p.titulo} className={styles['product-image']} />
+            <div className={styles['product-title']}>{p.titulo}</div>
+            <div className={styles['product-category']}>{p.categoria?.nome}</div>
+            <div className={styles['product-location']}>{p.usuario?.cidade}</div>
             <button
               className={styles['product-btn']}
               onClick={() => navigate(`/detalhes/${p.id}`)}

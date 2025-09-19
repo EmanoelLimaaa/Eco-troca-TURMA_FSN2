@@ -21,7 +21,7 @@ app.use('/uploads', express.static('uploads'));
 
 // Aplica o validateMiddleware apenas para rotas que não são de upload
 app.use((req, res, next) => {
-  if (!req.path.startsWith('/usuarios') || req.method === 'GET') {
+  if ((!req.path.startsWith('/usuarios') && !req.path.includes('/imagem')) || req.method === 'GET') {
     return validateMiddleware(req, res, next);
   }
   next();
