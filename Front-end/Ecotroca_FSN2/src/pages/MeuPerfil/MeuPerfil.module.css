@@ -3,6 +3,7 @@
   background-color: #ffffff;
   padding: 2rem;
   color: #1c1c1c;
+  margin-top: 65px; /* Espaço para o menu fixo */
 }
 
 .header {
