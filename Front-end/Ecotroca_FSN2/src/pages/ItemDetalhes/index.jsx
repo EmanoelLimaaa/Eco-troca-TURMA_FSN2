@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styles from "./ItemDetalhes.module.css";
 import { useParams, useNavigate } from "react-router-dom";
 import EcoTrocaMenu from "../../components/EcoTrocaMenu";
 import Footer from '../../components/Footer';
 import { getItemById } from '../../services/itemService';
+import { AuthContext } from '../../components/AuthContext';
 
 const DetalhesItem = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { isLoggedIn } = useContext(AuthContext);
   const [produto, setProduto] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -61,13 +63,15 @@ const DetalhesItem = () => {
             Faça uma proposta
           </button>
         </div>
-        <p
-          className={styles.loginMsg}
-          style={{ cursor: 'pointer', textDecoration: 'underline', color: '#59ce3b' }}
-          onClick={() => navigate('/login')}
-        >
-          Faça login para propor uma troca
-        </p>
+        {!isLoggedIn && (
+          <p
+            className={styles.loginMsg}
+            style={{ cursor: 'pointer', textDecoration: 'underline', color: '#59ce3b' }}
+            onClick={() => navigate('/login')}
+          >
+            Faça login para propor uma troca
+          </p>
+        )}
       </main>
       <Footer />
     </div>
