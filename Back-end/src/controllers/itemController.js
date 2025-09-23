@@ -107,7 +107,7 @@ export const buscarItemPorId = async (req, res) => {
 export const atualizarItem = async (req, res) => {
   const { id } = req.params;
   const dados = req.body;
-  const userId = req.userId; 
+  const userId = req.user.id;
 
   try {
     // Verifica se o item existe e pertence ao usuário
@@ -137,7 +137,7 @@ export const atualizarItem = async (req, res) => {
 
 export const deletarItem = async (req, res) => {
   const { id } = req.params;
-  const userId = req.userId; // Obtido do middleware de autenticação
+  const userId = req.user.id; // Obtido do middleware de autenticação
 
   try {
     // Verifica se o item existe e pertence ao usuário
@@ -164,7 +164,7 @@ export const deletarItem = async (req, res) => {
 
 export const uploadImagemItem = async (req, res) => {
   const { id } = req.params;
-  const userId = req.userId; // Obtido do middleware de autenticação
+  const userId = req.user.id; // Obtido do middleware de autenticação
 
   try {
     if (!req.file) {
