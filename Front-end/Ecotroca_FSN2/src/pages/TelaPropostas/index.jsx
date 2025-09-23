@@ -58,6 +58,10 @@ function TelaPropostas() {
         <div className={styles.container}>
           <h1 className={styles.title}>Criar Proposta de Troca</h1>
 
+          <div className={styles.developmentNotice}>
+            <p>⚠️ Esta funcionalidade está em desenvolvimento. Em breve você poderá enviar propostas de troca.</p>
+          </div>
+
           <form className={styles.form} onSubmit={handleSubmit}>
             <input
               type="text"

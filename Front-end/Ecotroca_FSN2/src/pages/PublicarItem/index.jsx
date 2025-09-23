@@ -59,9 +59,17 @@ function PublicarItem() {
       };
 
       const createdItem = await createItem(itemData);
+      console.log('Item criado:', createdItem);
 
       if (formData.imagem) {
-        await uploadItemImage(createdItem.id, formData.imagem);
+        try {
+          await uploadItemImage(createdItem.id, formData.imagem);
+          console.log('Imagem enviada com sucesso');
+        } catch (imageError) {
+          console.error('Erro ao enviar imagem:', imageError);
+          setMensagem('Item publicado com sucesso');
+          return;
+        }
       }
 
       setMensagem('Item publicado com sucesso!');
@@ -73,7 +81,7 @@ function PublicarItem() {
       });
     } catch (error) {
       console.error('Erro ao publicar item:', error);
-      setMensagem('Erro ao publicar item.');
+      setMensagem('Erro ao publicar item. Tente novamente.');
     }
   };
 

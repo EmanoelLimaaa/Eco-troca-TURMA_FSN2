@@ -26,21 +26,15 @@ export const criarItem = async (req, res) => {
   }
 
   try {
-    // Verifica se há arquivo de imagem enviado
-    let imagemPath = null;
-    if (req.file) {
-      imagemPath = req.file.filename; // Salva o nome do arquivo
-    }
-
     const item = await prisma.item.create({
       data: {
         titulo,
         descricao,
-        usuario_id: usuarioId,
-        categoria_id: categoriaId,
+        usuario_id: parseInt(usuarioId),
+        categoria_id: parseInt(categoriaId),
         estado_item,
         disponivel: true,
-        imagem: imagemPath,
+        imagem: null, // Imagem será adicionada posteriormente
       },
     });
     res.status(201).json(item);
@@ -107,7 +101,10 @@ export const buscarItemPorId = async (req, res) => {
 export const atualizarItem = async (req, res) => {
   const { id } = req.params;
   const dados = req.body;
+
+  const userId = req.userId;
   const userId = req.user.id;
+
 
   try {
     // Verifica se o item existe e pertence ao usuário
