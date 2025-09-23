@@ -139,6 +139,10 @@ function Login() {
         <form onSubmit={handleRecovery} className={styles.form}>
           <h2 className={styles.title}>Recuperar Senha</h2>
 
+          <div className={styles.developmentNotice}>
+            <p>⚠️ Esta funcionalidade está em desenvolvimento. Em breve você poderá recuperar sua senha.</p>
+          </div>
+
           {erro && <p className={styles.error}>{erro}</p>}
 
           <input
