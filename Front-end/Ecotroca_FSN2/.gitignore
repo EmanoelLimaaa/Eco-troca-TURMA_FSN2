@@ -12,7 +12,13 @@ dist
 dist-ssr
 *.local
 
-# Editor directories and files
+uploads/
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+
 .vscode/*
 !.vscode/extensions.json
 .idea
