@@ -12,7 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Upload directories - don't commit uploaded files
 uploads/
 *.png
 *.jpg
@@ -20,7 +19,6 @@ uploads/
 *.gif
 *.webp
 
-# Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
