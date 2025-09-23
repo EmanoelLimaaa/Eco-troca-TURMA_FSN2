@@ -107,7 +107,23 @@ export const buscarItemPorId = async (req, res) => {
 export const atualizarItem = async (req, res) => {
   const { id } = req.params;
   const dados = req.body;
+  const userId = req.userId; 
+
   try {
+    // Verifica se o item existe e pertence ao usuário
+    const item = await prisma.item.findUnique({
+      where: { id: Number(id) },
+      select: { usuario_id: true }
+    });
+
+    if (!item) {
+      return res.status(404).json({ error: 'Item não encontrado' });
+    }
+
+    if (item.usuario_id !== userId) {
+      return res.status(403).json({ error: 'Você não tem permissão para atualizar este item' });
+    }
+
     const itemAtualizado = await prisma.item.update({
       where: { id: Number(id) },
       data: dados,
@@ -121,7 +137,23 @@ export const atualizarItem = async (req, res) => {
 
 export const deletarItem = async (req, res) => {
   const { id } = req.params;
+  const userId = req.userId; // Obtido do middleware de autenticação
+
   try {
+    // Verifica se o item existe e pertence ao usuário
+    const item = await prisma.item.findUnique({
+      where: { id: Number(id) },
+      select: { usuario_id: true }
+    });
+
+    if (!item) {
+      return res.status(404).json({ error: 'Item não encontrado' });
+    }
+
+    if (item.usuario_id !== userId) {
+      return res.status(403).json({ error: 'Você não tem permissão para deletar este item' });
+    }
+
     await prisma.item.delete({ where: { id: Number(id) } });
     res.json({ message: 'Item deletado com sucesso' });
   } catch (error) {
@@ -132,19 +164,35 @@ export const deletarItem = async (req, res) => {
 
 export const uploadImagemItem = async (req, res) => {
   const { id } = req.params;
+  const userId = req.userId; // Obtido do middleware de autenticação
+
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'Nenhum arquivo enviado' });
     }
 
+    // Verifica se o item existe e pertence ao usuário
+    const item = await prisma.item.findUnique({
+      where: { id: Number(id) },
+      select: { usuario_id: true }
+    });
+
+    if (!item) {
+      return res.status(404).json({ error: 'Item não encontrado' });
+    }
+
+    if (item.usuario_id !== userId) {
+      return res.status(403).json({ error: 'Você não tem permissão para fazer upload de imagem para este item' });
+    }
+
     const imagemPath = req.file.filename;
 
-    const item = await prisma.item.update({
+    const updatedItem = await prisma.item.update({
       where: { id: Number(id) },
       data: { imagem: imagemPath },
     });
 
-    res.json({ message: 'Imagem enviada com sucesso', item });
+    res.json({ message: 'Imagem enviada com sucesso', item: updatedItem });
   } catch (error) {
     console.error('Erro ao fazer upload da imagem:', error);
     res.status(500).json({ error: 'Erro ao fazer upload da imagem' });
