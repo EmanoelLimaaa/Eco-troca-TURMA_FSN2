@@ -1,6 +1,6 @@
 export function validateMiddleware(req, res, next) {
-  // Ignora validação para requisições GET, HEAD, OPTIONS
-  if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
+  // Ignora validação para requisições GET, HEAD, OPTIONS, DELETE
+  if (['GET', 'HEAD', 'OPTIONS', 'DELETE'].includes(req.method)) {
     return next();
   }
 
