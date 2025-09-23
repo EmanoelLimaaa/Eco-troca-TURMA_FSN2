@@ -1,24 +1,59 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import style from "./PerfilUsuario.module.css";
 import EcoTrocaMenu from "../../components/EcoTrocaMenu";
 import Footer from '../../components/Footer';
+import { AuthContext } from '../../components/AuthContext';
+import { getCurrentUser, updateProfile } from '../../services/authService';
 
 function PerfilUsuario() {
+  const { user } = useContext(AuthContext);
   const [editMode, setEditMode] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [dados, setDados] = useState({
-    nome: "Sofia Mendes",
-    email: "sofia.mendes@email.com",
-    endereco: "Rua das Flores, 123, Lisboa, Portugal",
-    telefone: "+351 912 345 678",
-    interesses: "Roupas, Livros, Eletrônicos",
-    notificacoes: "Email, App",
+    nome: "",
+    email: "",
+    endereco: "",
+    telefone: "",
+    interesses: "",
+    notificacoes: "",
     foto: "",
   });
   const [tempDados, setTempDados] = useState({ ...dados });
 
   const nomeInputRef = useRef(null);
+
+  // Carregar dados do usuário do backend
+  useEffect(() => {
+    const loadUserData = async () => {
+      try {
+        const userData = await getCurrentUser();
+        console.log('Dados do usuário recebidos:', userData);
+        const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+        const formattedData = {
+          nome: userData.nome || "",
+          email: userData.email || "",
+          endereco: userData.endereco || "",
+          telefone: userData.telefone || "",
+          interesses: userData.interesses || "",
+          notificacoes: userData.notificacoes || "",
+          foto: userData.imagem_perfil ? `${baseURL}${userData.imagem_perfil}` : "",
+        };
+        console.log('Dados formatados:', formattedData);
+        setDados(formattedData);
+        setTempDados(formattedData);
+      } catch (error) {
+        console.error('Erro ao carregar dados do usuário:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user) {
+      loadUserData();
+    }
+  }, [user]);
 
   useEffect(() => {
     if (editMode && nomeInputRef.current) {
@@ -40,11 +75,30 @@ function PerfilUsuario() {
     setTempDados({ ...tempDados, [e.target.name]: e.target.value });
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    setDados(tempDados);
-    setEditMode(false);
-    setShowModal(false);
+    try {
+      // Preparar dados para enviar ao backend
+      const dataToUpdate = {
+        nome: tempDados.nome,
+        email: tempDados.email,
+        endereco: tempDados.endereco,
+        telefone: tempDados.telefone,
+        interesses: tempDados.interesses,
+        notificacoes: tempDados.notificacoes,
+      };
+
+      // Enviar para o backend
+      await updateProfile(dataToUpdate);
+
+      // Atualizar dados locais
+      setDados(tempDados);
+      setEditMode(false);
+      setShowModal(false);
+    } catch (error) {
+      console.error('Erro ao salvar dados:', error);
+      alert('Erro ao salvar dados. Tente novamente.');
+    }
   };
 
   const handlePhotoClick = () => {
@@ -69,6 +123,20 @@ function PerfilUsuario() {
     { id: "interesses", label: "Categorias de Interesse", name: "interesses" },
     { id: "notificacoes", label: "Notificações", name: "notificacoes" },
   ];
+
+  if (loading) {
+    return (
+      <>
+        <EcoTrocaMenu variant="perfilUsuario" />
+        <main className={style.main}>
+          <div style={{ textAlign: 'center', padding: '2rem' }}>
+            <p>Carregando dados do perfil...</p>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>

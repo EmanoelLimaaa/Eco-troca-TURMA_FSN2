@@ -44,7 +44,7 @@ const menuConfig = {
     { label: 'Configurações', path: '/configuracoes', type: 'button-gray' },
     { label: 'Pesquisar', type: 'search', showIn: ['item-detalhes', 'perfil-usuario'] },
     { label: 'Notificações', type: 'icon-button', icon: <NotificationIcon /> },
-    { label: 'Meu Perfil', path: '/meuperfil', type: 'icon-button', icon: <ProfileIcon /> },
+    { label: 'Meu Perfil', path: '/perfilusuario', type: 'icon-button', icon: <ProfileIcon /> },
   ],
 };
 
