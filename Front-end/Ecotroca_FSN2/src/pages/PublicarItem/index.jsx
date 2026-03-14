@@ -55,33 +55,28 @@ function PublicarItem() {
         descricao: formData.descricao,
         categoriaId: categorias.find(cat => cat.nome === formData.categoria)?.id,
         usuarioId: user.id,
-        estado_item: 'novo', // ou outro valor padrão
+        estado_item: 'novo',
       };
 
       const createdItem = await createItem(itemData);
-      console.log('Item criado:', createdItem);
+      console.log('Item criado (mock):', createdItem);
 
+      // Upload imagem mock
       if (formData.imagem) {
-        try {
-          await uploadItemImage(createdItem.id, formData.imagem);
-          console.log('Imagem enviada com sucesso');
-        } catch (imageError) {
-          console.error('Erro ao enviar imagem:', imageError);
-          setMensagem('Item publicado com sucesso');
-          return;
-        }
+        await uploadItemImage(createdItem.id, formData.imagem);
       }
 
-      setMensagem('Item publicado com sucesso!');
+      setMensagem('✅ Item publicado com sucesso! (Mock - dados salvos local)');
       setFormData({
         titulo: '',
         descricao: '',
         categoria: '',
         imagem: null,
       });
+      setTimeout(() => setMensagem(''), 5000);
     } catch (error) {
       console.error('Erro ao publicar item:', error);
-      setMensagem('Erro ao publicar item. Tente novamente.');
+      setMensagem('Erro ao publicar (mock salvo local).');
     }
   };
 
@@ -91,6 +86,7 @@ function PublicarItem() {
 
       <div className={style.container}>
         <h1>Publicar um Item</h1>
+        <p className={style.mockNote}>📱 Modo Demo: Form funciona, dados mock salvos local</p>
 
         <form className="form" onSubmit={handleSubmit}>
           {/* Upload de imagem */}
@@ -119,7 +115,6 @@ function PublicarItem() {
             />
           </div>
           {/* Descrição */}
-
           <div className={style.campo}>
             <label htmlFor="descricao">Descrição</label>
             <textarea
@@ -131,7 +126,7 @@ function PublicarItem() {
               onChange={handleChange}
             ></textarea>
           </div>
-          {/* Categoria, localização e botão de publicar */}
+          {/* Categoria */}
           <div className={style.campo}>
             <label htmlFor="categoria">Categoria</label>
             <select

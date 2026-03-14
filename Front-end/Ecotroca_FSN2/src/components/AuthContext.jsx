@@ -9,22 +9,16 @@ export const AuthProvider = ({ children }) => {
   const [redirectTo, setRedirectTo] = useState(null);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        try {
-          const currentUser = await getCurrentUser();
-          setUser(currentUser);
-        } catch (error) {
-          console.error('Erro ao verificar autenticação:', error);
-          localStorage.removeItem('token');
-          localStorage.removeItem('refreshToken');
-          setUser(null);
-        }
-      }
-      setLoading(false);
-    };
-    checkAuth();
+    const token = localStorage.getItem('token');
+    if (token) {
+      getCurrentUser().then(currentUser => {
+        setUser(currentUser);
+      }).catch(() => {
+        localStorage.removeItem('token');
+        setUser(null);
+      });
+    }
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -33,25 +27,19 @@ export const AuthProvider = ({ children }) => {
     }
   }, [redirectTo]);
 
-  const login = useCallback(async (email, password) => {
+  const login = useCallback(async (email, senha) => {
     try {
       setLoading(true);
-      const { token, refreshToken } = await loginService(email, password);
-      
-      localStorage.setItem('token', token);
-      localStorage.setItem('refreshToken', refreshToken);
-      
-      const currentUser = await getCurrentUser();
-      setUser(currentUser);
-      
+      const result = await loginService(email, senha);
+      localStorage.setItem('token', result.token || 'mock');
+      localStorage.setItem('refreshToken', result.refreshToken || 'mock');
+      setUser(result.user);
       setRedirectTo('/');
-      
-      return currentUser;
+      return result.user;
     } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      setUser(null);
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');
+      setUser(null);
       throw error;
     } finally {
       setLoading(false);
@@ -61,14 +49,11 @@ export const AuthProvider = ({ children }) => {
   const logout = useCallback(async () => {
     try {
       await logoutService();
-    } catch (error) {
-      console.error('Erro ao fazer logout:', error);
-    } finally {
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshToken');
-      setUser(null);
-      setRedirectTo('/login');
-    }
+    } catch {}
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    setUser(null);
+    setRedirectTo('/login');
   }, []);
 
   return (
