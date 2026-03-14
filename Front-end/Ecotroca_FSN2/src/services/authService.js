@@ -1,11 +1,15 @@
-import api from './api';
+export const login = (email, senha) => {
+  //LOGIN: test@test.com / 123456
+  if (email === 'test@test.com' && senha === '123456') {
+    return Promise.resolve({ token: 'mock-jwt', refreshToken: 'mock-refresh', user: {id:1, nome:'Test User', email, cidade:'SP'} });
+  }
+  return Promise.reject(new Error('Credenciais inválidas'));
+};
 
-export const login = (email, senha) => api.post('/auth/login', { email, senha }).then(res => res.data);
+export const register = (userData) => Promise.resolve({ success: true, user: userData });
 
-export const register = (userData) => api.post('/auth/register', userData).then(res => res.data);
+export const getCurrentUser = () => Promise.resolve({ id:1, nome:'Test User', email:'test@test.com', cidade:'SP', imagem_perfil:'user.png' });
 
-export const getCurrentUser = () => api.get('/auth/me').then(res => res.data);
+export const updateProfile = () => Promise.resolve({ success: true });
 
-export const updateProfile = (userData) => api.put('/auth/me', userData).then(res => res.data);
-
-export const logout = () => api.post('/auth/logout');
+export const logout = () => Promise.resolve({ success: true });

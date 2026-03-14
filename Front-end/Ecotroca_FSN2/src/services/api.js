@@ -1,18 +1,7 @@
-import axios from 'axios';
-
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-api.interceptors.request.use(config => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
+const api = {
+  get: () => Promise.resolve({ data: [] }),
+  post: () => Promise.resolve({ data: {} }),
+  put: () => Promise.resolve({ data: {} }),
+  delete: () => Promise.resolve({ data: {} })
+}; 
 export default api;

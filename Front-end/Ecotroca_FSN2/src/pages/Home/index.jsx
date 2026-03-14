@@ -115,7 +115,7 @@ const Home = () => {
         )}
         {!loading && produtosFiltrados.map((p) => (
           <div className={styles['product-card']} key={p.id}>
-            <img src={p.imagem ? `http://localhost:3000/uploads/${p.imagem}` : null} alt={p.titulo} className={styles['product-image']} />
+            <img src={p.imagem ? `/src/assets/imagensdaHome/${p.imagem}` : '/src/assets/ImagensdoMeuPerfil/user.png'} alt={p.titulo} className={styles['product-image']} />
             <div className={styles['product-title']}>{p.titulo}</div>
             <div className={styles['product-category']}>{p.categoria?.nome}</div>
             <div className={styles['product-location']}>{p.usuario?.cidade}</div>
