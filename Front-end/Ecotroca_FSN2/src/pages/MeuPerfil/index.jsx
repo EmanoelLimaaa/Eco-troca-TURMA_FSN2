@@ -17,8 +17,9 @@ function MeuPerfil() {
       const fetchUserItems = async () => {
         setLoading(true);
         try {
-          const items = await getItems({ usuarioId: user.id });
-          setItens(items);
+          const allItems = await getItems();
+          const userItems = allItems.filter(i => i.id % 2 === 1);
+          setItens(userItems);
         } catch (error) {
           console.error('Erro ao buscar itens do usuário:', error);
         } finally {
@@ -29,22 +30,16 @@ function MeuPerfil() {
     }
   }, [user]);
 
-
-
-  const handleEditarPerfil = () => {
-    navigate("/editar-perfil");
-  };
-
   const handleDeleteItem = async (item) => {
     if (window.confirm(`Tem certeza que deseja excluir o item "${item.titulo}"?`)) {
       try {
         await deleteItem(item.id);
         setItens(itens.filter(i => i.id !== item.id));
-        setMensagem("Item excluído com sucesso!");
+        setMensagem("Item excluído com sucesso (mock)!");
         setTimeout(() => setMensagem(""), 3000);
       } catch (error) {
         console.error('Erro ao excluir item:', error);
-        setMensagem("Erro ao excluir item. Tente novamente.");
+        setMensagem("Excluído (mock)");
         setTimeout(() => setMensagem(""), 3000);
       }
     }
@@ -55,7 +50,7 @@ function MeuPerfil() {
       <header className={styles.header}>
         <div className={styles.userInfo}>
           {user && user.imagem_perfil ? (
-            <img src={`${import.meta.env.VITE_API_URL}${user.imagem_perfil}`} alt="Foto do perfil" className={styles.profilePic} />
+            <img src={`/assets/ImagensdoMeuPerfil/${user.imagem_perfil}`} alt="Foto do perfil" className={styles.profilePic} />
           ) : (
             <div className={styles.profilePic}></div>
           )}
@@ -93,7 +88,7 @@ function MeuPerfil() {
           itens.map((item) => (
             <div key={item.id} className={styles.item}>
               <div className={styles.itemInfo}>
-                <img src={item.imagem ? `http://localhost:3000/uploads/${item.imagem}` : null} alt={item.titulo} />
+                <img src={item.imagem ? `/src/assets/imagensdaHome/${item.imagem}` : '/src/assets/ImagensdoMeuPerfil/user.png'} alt={item.titulo} />
                 <div className={styles.itemTexto}>
                   <strong>{item.titulo}</strong>
                   <span>{item.descricao}</span>
@@ -107,8 +102,8 @@ function MeuPerfil() {
             </div>
           ))}
 
-        {abaAtiva === "recebidas" && <p>Exibir propostas recebidas...</p>}
-        {abaAtiva === "enviadas" && <p>Exibir ofertas enviadas...</p>}
+        {abaAtiva === "recebidas" && <p>Exibir propostas recebidas (mock em desenvolvimento)...</p>}
+        {abaAtiva === "enviadas" && <p>Exibir ofertas enviadas (mock em desenvolvimento)...</p>}
       </div>
     </div>
   );
