@@ -1,1 +1,0 @@
-# TODO: Frontend Estático\n\n✅ 1. Explorar\n✅ 2. Services (api/auth/item/categoria)\n✅ 3. Mock AuthContext\n⏳ 4. Fix Home (imagens + filtros)\n⏳ 5. MeuPerfil mock itens user\n⏳ 6. PublicarItem form mock\n⏳ 7. Test build/preview\n⏳ 8. Vercel deploy\n\n**Progresso: 50%**
