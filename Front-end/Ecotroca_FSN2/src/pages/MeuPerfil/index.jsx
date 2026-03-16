@@ -50,7 +50,7 @@ function MeuPerfil() {
       <header className={styles.header}>
         <div className={styles.userInfo}>
           {user && user.imagem_perfil ? (
-            <img src={`/assets/ImagensdoMeuPerfil/${user.imagem_perfil}`} alt="Foto do perfil" className={styles.profilePic} />
+            <img src={`/ImagensdoMeuPerfil/${user.imagem_perfil}`} alt="Foto do perfil" className={styles.profilePic} />
           ) : (
             <div className={styles.profilePic}></div>
           )}
@@ -88,7 +88,7 @@ function MeuPerfil() {
           itens.map((item) => (
             <div key={item.id} className={styles.item}>
               <div className={styles.itemInfo}>
-                <img src={item.imagem ? `/src/assets/imagensdaHome/${item.imagem}` : '/src/assets/ImagensdoMeuPerfil/user.png'} alt={item.titulo} />
+                <img src={item.imagem ? `/imagensdaHome/${item.imagem}` : '/ImagensdoMeuPerfil/user.png'} alt={item.titulo} />
                 <div className={styles.itemTexto}>
                   <strong>{item.titulo}</strong>
                   <span>{item.descricao}</span>
@@ -110,3 +110,4 @@ function MeuPerfil() {
 }
 
 export default MeuPerfil;
+
